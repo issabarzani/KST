@@ -15,7 +15,7 @@ const phone = home.contact.phone1;
 async function askAI(history: Msg[]): Promise<string | null> {
   try {
     const ctrl = new AbortController();
-    const timer = setTimeout(() => ctrl.abort(), 20000);
+    const timer = setTimeout(() => ctrl.abort(), 45000); // Kurdish answers can take longer to write
     const r = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
