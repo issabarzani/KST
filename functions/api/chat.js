@@ -1,20 +1,72 @@
 /*
   KST assistant endpoint for Cloudflare Pages (POST /api/chat).
-  Set the secret ANTHROPIC_API_KEY in the Pages project settings.
-  Without it this returns 503 and the website chat uses its built-in answers.
-  The model, limits and company facts come from functions-lib/chat-config.js,
+
+  Which AI answers, in order:
+  1. Cloudflare Workers AI (free daily allowance, no API key): add a Workers AI binding named "AI"
+     in the Pages project (Settings > Bindings). Model: Google Gemma 4, with Llama 4 Scout as backup.
+  2. Anthropic Claude, if the secret ANTHROPIC_API_KEY is set (paid, optional).
+  3. Neither available or the daily free allowance used up: returns an error and the website chat
+     answers from its built-in company information instead, so visitors never see a failure.
+
+  The company facts, limits and prompt come from functions-lib/chat-config.js,
   which `npm run build:static` regenerates from the website content on every build.
 */
 import { CHAT_MODEL, MAX_CHARS, MAX_MESSAGES, MAX_TOKENS, SYSTEM_PROMPT } from '../../functions-lib/chat-config.js';
 
+const WORKERS_AI_MODELS = [
+  { id: '@cf/google/gemma-4-26b-a4b-it', limit: 'max_completion_tokens' },
+  { id: '@cf/meta/llama-4-scout-17b-16e-instruct', limit: 'max_tokens' },
+];
+
 const json = (status, body) =>
   new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
 
-export async function onRequestPost({ request, env }) {
-  const key = env.ANTHROPIC_API_KEY;
-  if (!key) return json(503, { error: 'assistant not configured' });
+/** Plain text for the chat bubble: no hidden reasoning, no markdown symbols. */
+function tidy(text) {
+  return String(text || '')
+    .replace(/<think>[\s\S]*?<\/think>/gi, '')
+    .replace(/\*\*(.+?)\*\*/g, '$1')
+    .replace(/^#{1,6}\s+/gm, '')
+    .replace(/^\s*[-*]\s+/gm, '• ')
+    .trim();
+}
 
-  // Only answer requests coming from this website, so others can't use your API key
+async function askWorkersAI(ai, messages) {
+  for (const model of WORKERS_AI_MODELS) {
+    try {
+      const out = await ai.run(model.id, {
+        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
+        [model.limit]: Math.max(MAX_TOKENS, 800), // room for the model to think before it answers
+        temperature: 0.3,
+      });
+      const text = tidy(out?.choices?.[0]?.message?.content ?? out?.response ?? '');
+      if (text) return text;
+      console.error('chat.workers_ai_empty', model.id);
+    } catch (e) {
+      console.error('chat.workers_ai_failed', model.id, e && e.message);
+    }
+  }
+  return null;
+}
+
+async function askClaude(key, messages) {
+  const r = await fetch('https://api.anthropic.com/v1/messages', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
+    body: JSON.stringify({ model: CHAT_MODEL, max_tokens: MAX_TOKENS, system: SYSTEM_PROMPT, messages }),
+  });
+  if (!r.ok) {
+    console.error('chat.upstream_failed', r.status);
+    return null;
+  }
+  const data = await r.json();
+  return tidy((data.content || []).filter((c) => c.type === 'text').map((c) => c.text).join(''));
+}
+
+export async function onRequestPost({ request, env }) {
+  if (!env.AI && !env.ANTHROPIC_API_KEY) return json(503, { error: 'assistant not configured' });
+
+  // Only answer requests coming from this website, so others can't use your AI allowance
   const origin = request.headers.get('origin');
   if (origin && new URL(origin).host !== new URL(request.url).host) return json(403, { error: 'forbidden' });
 
@@ -34,18 +86,9 @@ export async function onRequestPost({ request, env }) {
   }
 
   try {
-    const r = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
-      body: JSON.stringify({ model: CHAT_MODEL, max_tokens: MAX_TOKENS, system: SYSTEM_PROMPT, messages }),
-    });
-    if (!r.ok) {
-      console.error('chat.upstream_failed', r.status);
-      return json(502, { error: 'upstream error' });
-    }
-    const data = await r.json();
-    const reply = (data.content || []).filter((c) => c.type === 'text').map((c) => c.text).join('').trim();
-    return reply ? json(200, { reply }) : json(502, { error: 'empty reply' });
+    let reply = env.AI ? await askWorkersAI(env.AI, messages) : null;
+    if (!reply && env.ANTHROPIC_API_KEY) reply = await askClaude(env.ANTHROPIC_API_KEY, messages);
+    return reply ? json(200, { reply }) : json(502, { error: 'no answer' });
   } catch (e) {
     console.error('chat.failed', e && e.message);
     return json(502, { error: 'upstream error' });
