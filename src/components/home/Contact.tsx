@@ -1,16 +1,16 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
-import { CheckCircle2, Loader2, Mail, MapPin, Phone } from 'lucide-react';
+import { CheckCircle2, Loader2, MapPin } from 'lucide-react';
 import { home } from 'virtual:content';
 import { useLang } from '@/lib/lang-context';
 import { contactSection as c, services } from '@/lib/i18n';
 import { CONTACT_FORM_ENDPOINT } from '@/config/forms';
+import { waLink, whatsappNumbers } from '@/lib/contact';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 type Field = 'name' | 'company' | 'phone' | 'email' | 'service' | 'message';
 type Checked = 'name' | 'phone' | 'email' | 'service' | 'message';
 
 const empty: Record<Field, string> = { name: '', company: '', phone: '', email: '', service: '', message: '' };
-const phones = [home.contact.phone1, home.contact.phone2, home.contact.phone3, home.contact.phone4];
-const tel = (p: string) => `tel:${p.replace(/\s/g, '')}`;
 const ORDER: Checked[] = ['name', 'phone', 'email', 'service', 'message'];
 
 // Kurdish/Arabic digits count as digits too
@@ -239,8 +239,9 @@ export default function Contact() {
                     <p className="font-semibold">{c.error[lang]}</p>
                     <p className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1">
                       <span>{c.orReach[lang]}</span>
-                      <a href={tel(phones[0])} className="ltr-isolate font-bold underline underline-offset-2">{phones[0]}</a>
-                      <a href={`mailto:${home.contact.email}`} className="ltr-isolate font-bold underline underline-offset-2">{home.contact.email}</a>
+                      {whatsappNumbers.map((p) => (
+                        <a key={p} href={waLink(p, c.whatsappHello[lang])} target="_blank" rel="noopener noreferrer" className="ltr-isolate font-bold underline underline-offset-2">{p}</a>
+                      ))}
                     </p>
                   </div>
                 )}
@@ -258,33 +259,38 @@ export default function Contact() {
           </div>
 
           <div className="space-y-8">
-            <ul className="space-y-6">
-              <li className="flex gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded bg-primary/10 text-primary"><MapPin size={20} aria-hidden="true" /></span>
-                <div>
-                  <p className="text-sm font-bold">{c.address[lang]}</p>
-                  <p className="mt-1 text-muted-foreground">{address}</p>
-                </div>
-              </li>
-              <li className="flex gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded bg-primary/10 text-primary"><Phone size={20} aria-hidden="true" /></span>
-                <div>
-                  <p className="text-sm font-bold">{c.phone[lang]}</p>
-                  <div className="mt-1 grid gap-x-6 sm:grid-cols-2">
-                    {phones.map((p) => (
-                      <a key={p} href={tel(p)} className="ltr-isolate py-1 text-muted-foreground hover:text-primary">{p}</a>
-                    ))}
-                  </div>
-                </div>
-              </li>
-              <li className="flex gap-4">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded bg-primary/10 text-primary"><Mail size={20} aria-hidden="true" /></span>
-                <div>
-                  <p className="text-sm font-bold">{c.email[lang]}</p>
-                  <a href={`mailto:${home.contact.email}`} className="ltr-isolate mt-1 break-all text-muted-foreground hover:text-primary">{home.contact.email}</a>
-                </div>
-              </li>
-            </ul>
+            <div>
+              <p className="text-[1.02rem] leading-relaxed text-foreground/80">{c.whatsappLead[lang]}</p>
+              <ul className="mt-5 grid gap-3">
+                {whatsappNumbers.map((p) => (
+                  <li key={p}>
+                    <a
+                      href={waLink(p, c.whatsappHello[lang])}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group flex items-center gap-4 rounded-md border border-border bg-card p-4 transition-colors hover:border-[#0e7a3e] hover:bg-[#0e7a3e]/[0.06]"
+                    >
+                      <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#0e7a3e] text-white">
+                        <WhatsAppIcon size={24} />
+                      </span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block text-sm font-bold text-muted-foreground">{c.whatsapp[lang]}</span>
+                        <span className="ltr-isolate text-lg font-extrabold text-foreground" style={{ fontFamily: 'var(--font-latin)' }}>{p}</span>
+                      </span>
+                      <span className="rounded-full bg-[#0e7a3e] px-3 py-1.5 text-xs font-bold text-white">{c.whatsappChat[lang]}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="flex gap-4">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded bg-primary/10 text-primary"><MapPin size={20} aria-hidden="true" /></span>
+              <div>
+                <p className="text-sm font-bold">{c.address[lang]}</p>
+                <p className="mt-1 text-muted-foreground">{address}</p>
+              </div>
+            </div>
 
             <div className="overflow-hidden rounded-md border border-border">
               <iframe

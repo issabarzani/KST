@@ -1,10 +1,8 @@
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { ArrowRight, MapPin } from 'lucide-react';
 import { home } from 'virtual:content';
 import { useLang } from '@/lib/lang-context';
 import { footer, nav, services, contactSection } from '@/lib/i18n';
 
-const phones = [home.contact.phone1, home.contact.phone2, home.contact.phone3, home.contact.phone4];
-const tel = (p: string) => `tel:${p.replace(/\s/g, '')}`;
 
 export default function Footer() {
   const { lang } = useLang();
@@ -45,19 +43,14 @@ export default function Footer() {
 
         <div>
           <h3 className="mb-4 text-sm font-bold text-white">{contactSection.label[lang]}</h3>
-          <ul className="space-y-4 text-sm">
+          <ul className="space-y-5 text-sm">
             <li className="flex gap-3"><MapPin size={17} className="mt-1 shrink-0 text-[hsl(var(--gold))]" /><span>{address}</span></li>
-            <li className="flex gap-3">
-              <Phone size={17} className="mt-1 shrink-0 text-[hsl(var(--gold))]" />
-              <span className="space-y-1">
-                {phones.map((p) => (
-                  <a key={p} href={tel(p)} className="ltr-isolate block text-white/80 hover:text-white">{p}</a>
-                ))}
-              </span>
-            </li>
-            <li className="flex gap-3">
-              <Mail size={17} className="mt-1 shrink-0 text-[hsl(var(--gold))]" />
-              <a href={`mailto:${home.contact.email}`} className="ltr-isolate break-all text-white/80 hover:text-white">{home.contact.email}</a>
+            <li>
+              <p className="font-bold text-white">{footer.talk[lang]}</p>
+              <a href="#contact" className="mt-2 inline-flex items-center gap-2 text-[hsl(var(--gold))] hover:text-white">
+                {footer.talkLink[lang]}
+                <ArrowRight size={15} className="rtl:-scale-x-100" aria-hidden="true" />
+              </a>
             </li>
           </ul>
         </div>

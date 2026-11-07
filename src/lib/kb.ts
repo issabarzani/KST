@@ -1,6 +1,7 @@
 import { home, portfolio } from 'virtual:content';
 import type { Lang } from '@/lib/lang-context';
-import { about, services, type L10n } from '@/lib/i18n';
+import { about, sectorLabels, services, type L10n } from '@/lib/i18n';
+import { whatsappNumbers } from '@/lib/contact';
 import { hvac, healthcare } from '@/lib/proposals';
 
 /*
@@ -12,7 +13,6 @@ import { hvac, healthcare } from '@/lib/proposals';
     2. The chat widget uses it directly (no AI needed) when the AI endpoint is unavailable.
 */
 
-const phones = [home.contact.phone1, home.contact.phone2, home.contact.phone3, home.contact.phone4];
 const lines = (arr: L10n[], lang: Lang) => arr.map((x) => `• ${x[lang]}`).join('\n');
 const l = (ku: string, en: string, ar: string): L10n => ({ ku, en, ar });
 
@@ -41,22 +41,22 @@ export const kb: KbEntry[] = [
     id: 'services',
     keys: ['service', 'services', 'offer', 'خزمەتگوزاری', 'خزمەت', 'کار', 'خدمات', 'خدمة', 'تقدمون'],
     title: l('خزمەتگوزاریەکان', 'Our services', 'خدماتنا'),
-    text: perLang((g) => services.map((s) => `• ${s.name[g]}: ${s.desc[g]}`).join('\n')),
+    text: perLang((g) => services.map((s) => `• ${s.name[g]}: ${s.desc[g]} (${s.scope.map((x) => x[g]).join(g === 'en' ? ', ' : '، ')})`).join('\n')),
   },
   ...services.map<KbEntry>((s) => ({
     id: `service-${s.key}`,
     keys: {
-      construction: ['construction', 'building', 'civil', 'hotel', 'بیناسازی', 'بینا', 'بناء', 'إنشاء', 'انشاء'],
-      hvac: ['hvac', 'cooling', 'air conditioning', 'ac', 'refrigeration', 'chiller', 'vrf', 'ساردکەرەوە', 'سارد', 'تکییف', 'تكييف', 'تبريد'],
+      construction: ['construction', 'building', 'civil', 'hotel', 'decoration', 'fit-out', 'renovation', 'بیناسازی', 'بینا', 'دیکۆر', 'نۆژەن', 'بناء', 'إنشاء', 'انشاء', 'ديكور', 'تجديد'],
+      hvac: ['hvac', 'cooling', 'air conditioning', 'ac', 'refrigeration', 'chiller', 'vrf', 'cold room', 'split', 'ساردکەرەوە', 'سارد', 'ئێچ ڤاک', 'سپلیت', 'تکییف', 'تكييف', 'تبريد', 'مكيف'],
       ventilation: ['ventilation', 'fresh air', 'ئایر فرێش', 'ڤێنتیلەیشن', 'تهوية', 'هواء'],
-      electrical: ['electrical', 'electric', 'power', 'generator', 'کارەبا', 'وزە', 'كهرباء', 'طاقة'],
+      electrical: ['electrical', 'electric', 'power', 'generator', 'lighting', 'کارەبا', 'وزە', 'مۆلیدە', 'ڕووناکی', 'كهرباء', 'طاقة', 'مولدة', 'إنارة'],
       cleanroom: ['cleanroom', 'operating room', 'theatre', 'theater', 'هۆڵی نەشتەرگەری', 'کلینرووم', 'غرف العمليات', 'غرفة عمليات'],
       medical: ['medical', 'equipment', 'device', 'repair', 'پزیشکی', 'ئامێر', 'طبي', 'أجهزة', 'معدات'],
-      it: ['it', 'smart', 'network', 'technology', 'تەکنەلۆژی', 'ئایتی', 'زیرەک', 'تكنولوجيا', 'ذكي', 'شبكات'],
+      it: ['it', 'smart', 'network', 'technology', 'camera', 'cctv', 'wifi', 'تەکنەلۆژی', 'ئایتی', 'زیرەک', 'کامێرا', 'تۆڕ', 'تكنولوجيا', 'ذكي', 'شبكات', 'كاميرا', 'كاميرات'],
       pm: ['project management', 'supervision', 'manage', 'سەرپەرشتی', 'بەڕێوەبردن', 'إدارة', 'اشراف', 'إشراف'],
     }[s.key],
     title: s.name,
-    text: s.desc,
+    text: perLang((g) => `${s.desc[g]}\n${s.scope.map((x) => `• ${x[g]}`).join('\n')}`),
   })),
   {
     id: 'hvac-proposal',
@@ -107,14 +107,14 @@ export const kb: KbEntry[] = [
     text: perLang((g) => {
       const name = (p: (typeof portfolio)[number]) => (g === 'ku' ? p.nameKu : g === 'ar' ? p.nameAr : p.nameEn);
       const loc = (p: (typeof portfolio)[number]) => (g === 'ku' ? p.location : g === 'ar' ? p.locationAr : p.locationEn);
-      return portfolio.map((p) => `• ${name(p)} (${loc(p)}): ${p.sectors.join(', ')}`).join('\n');
+      return portfolio.map((p) => `• ${name(p)} (${loc(p)}): ${p.sectors.map((x) => sectorLabels[x]?.[g] ?? x).join(', ')}`).join('\n');
     }),
   },
   {
     id: 'contact',
-    keys: ['contact', 'phone', 'call', 'email', 'mail', 'whatsapp', 'number', 'پەیوەندی', 'ژمارە', 'تەلەفۆن', 'ئیمەیڵ', 'اتصال', 'اتصل', 'هاتف', 'رقم', 'بريد', 'تواصل'],
+    keys: ['contact', 'phone', 'call', 'email', 'mail', 'whatsapp', 'number', 'پەیوەندی', 'ژمارە', 'تەلەفۆن', 'ئیمەیڵ', 'واتسئەپ', 'وەتسئەپ', 'اتصال', 'اتصل', 'هاتف', 'رقم', 'بريد', 'تواصل', 'واتساب'],
     title: l('پەیوەندی', 'Contact', 'التواصل'),
-    text: perLang((g) => `${addr[g]}\n${phones.join('\n')}\n${home.contact.email}`),
+    text: perLang((g) => `${l('واتسئەپ', 'WhatsApp', 'واتساب')[g]}: ${whatsappNumbers.join(' / ')}\n${addr[g]}\n${l('ئیمەیڵمان نییە؛ لە واتسئەپ یان فۆرمی پەیوەندییەوە نامە بنێرە.', 'We do not use email; message us on WhatsApp or through the contact form.', 'لا نستخدم البريد الإلكتروني؛ راسلنا على واتساب أو عبر نموذج التواصل.')[g]}`),
   },
   {
     id: 'location',
@@ -150,12 +150,12 @@ export const chatText = {
     'مرحباً! أنا مساعد KST. يمكنني الإجابة عن خدماتنا وعروضنا والضمان وطرق التواصل.'
   ),
   fallback: l(
-    'ئەمەم لە زانیارییەکانمان نەدۆزییەوە. دەتوانیت داواکاری بنێریت یان پەیوەندیمان پێوە بکەیت و تیمەکەمان وەڵام دەداتەوە.',
-    "I could not find that in our information. You can send a request or call us and the team will answer.",
-    'لم أجد ذلك في معلوماتنا. يمكنك إرسال طلب أو الاتصال بنا وسيجيبك الفريق.'
+    'بەڵێ، تیمەکەمان دەتوانێت لەم بارەیەوە یارمەتیت بدات. لە بەشی پەیوەندی لە واتسئەپ نامەمان بۆ بنێرە یان فۆرمەکە پڕ بکەرەوە.',
+    'Yes, our team can help you with this. Message us on WhatsApp in the Contact section, or send the form.',
+    'نعم، يمكن لفريقنا مساعدتك في ذلك. راسلنا على واتساب في قسم التواصل أو أرسل النموذج.'
   ),
   thinking: l('دەنووسێت...', 'Typing…', 'يكتب…'),
-  call: l('پەیوەندی تەلەفۆنی', 'Call us', 'اتصل بنا'),
+  call: l('واتسئەپ', 'WhatsApp', 'واتساب'),
   quote: l('داوای نرخ بکە', 'Request a quote', 'اطلب عرض سعر'),
   note: l('وەڵامەکان لەسەر زانیاری ماڵپەڕەکەن. نرخ لەسەر پرۆژەکە دادەنرێت.', 'Answers come from the information on this site. Pricing depends on the project.', 'الإجابات مبنية على معلومات الموقع. السعر حسب المشروع.'),
 };

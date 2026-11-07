@@ -1,15 +1,14 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
-import { MessageCircle, Phone, Send, X } from 'lucide-react';
-import { home } from 'virtual:content';
+import { MessageCircle, Send, X } from 'lucide-react';
 import { useLang } from '@/lib/lang-context';
 import { chatText as T, localAnswer, suggestions } from '@/lib/kb';
+import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 interface Msg {
   role: 'user' | 'assistant';
   content: string;
 }
 
-const phone = home.contact.phone1;
 
 /** Try the AI endpoint; any failure (no key, offline, server error) returns null so we use built-in answers. */
 async function askAI(history: Msg[]): Promise<string | null> {
@@ -140,9 +139,9 @@ export default function ChatAgent() {
 
             {msgs.length > 0 && !busy && (
               <div className="flex flex-wrap gap-2 pt-1">
-                <a href={`tel:${phone.replace(/\s/g, '')}`} className="inline-flex items-center gap-1.5 rounded-full border border-border px-3 py-1.5 text-xs font-semibold hover:bg-muted">
-                  <Phone size={13} /> {T.call[lang]}
-                </a>
+                <button onClick={goQuote} className="inline-flex items-center gap-1.5 rounded-full bg-[#0e7a3e] px-3 py-1.5 text-xs font-semibold text-white hover:bg-[#0b6a35]">
+                  <WhatsAppIcon size={14} /> {T.call[lang]}
+                </button>
                 <button onClick={goQuote} className="rounded-full bg-primary px-3 py-1.5 text-xs font-semibold text-primary-foreground hover:bg-primary/90">
                   {T.quote[lang]}
                 </button>

@@ -61,17 +61,11 @@
 ئارەزوومەندانە: ئەگەر دواتر Claude ـت ویست وەک یەدەگ، لە `Variables and Secrets` سیکرێتێک بە ناوی `ANTHROPIC_API_KEY` زیاد بکە.
 کۆدەکە (`functions/api/chat.js`) تەنیا وەڵامی داواکاری ماڵپەڕەکەی خۆت دەداتەوە، بۆ ئەوەی کەسی تر بەشە بەخۆڕاییەکەت بەکار نەهێنێت.
 
-### ٤. دۆمەینی `kurdistanserviceteam.com` ببەستەوە
+### ٤. دۆمەینی `kurdistanserviceteam.com` (بەستراوە)
 
-Cloudflare بۆ دۆمەینی سەرەکی (بەبێ www) داوا دەکات DNS ـەکە بگوازرێتەوە بۆ Cloudflare:
-
-1. `Add a domain` ← `kurdistanserviceteam.com` ← پلانی `Free`.
-2. **زۆر گرنگ، پێش گۆڕینی nameserver:** لە لیستی DNS دڵنیابە کە تۆمارەکانی ئیمەیڵ (`MX`، و `TXT`ـی SPF/DKIM) بۆ `info@kurdistanserviceteam.com` هەموویان کۆپی کراون. ئەگەر کەم بوو، لە کۆمپانیای دۆمەینەکەتەوە (registrar) کۆپیان بکە. ئەگەر نا، ئیمەیڵەکەت دەوەستێت.
-3. لە ماڵپەڕی کۆمپانیای دۆمەینەکەت، nameserver ـەکان بگۆڕە بۆ ئەو دوانەی Cloudflare پێتی دەدات.
-4. لە پرۆژەی Pages: `Custom domains` ← `Set up a custom domain` ← `kurdistanserviceteam.com`، پاشان هەمان کار بۆ `www.kurdistanserviceteam.com`.
-5. SSL خۆکار چالاک دەبێت (چەند خولەکێک تا چەند کاتژمێرێک).
-
-ئەگەر نەتەوێت DNS بگوازیتەوە: تەنیا `www.kurdistanserviceteam.com` دەتوانرێت بە تۆماری `CNAME` بۆ `kst-xxx.pages.dev` لە کۆمپانیای دۆمەینەکەتەوە ببەسترێتەوە (سەرەتا لە `Custom domains` زیادی بکە).
+دۆمەینەکە لە هەمان هەژماری Cloudflare ـە و بە پرۆژەی Pages ـەوە بەستراوە:
+- `kurdistanserviceteam.com` و `www.kurdistanserviceteam.com` هەردووکیان بە تۆماری `CNAME` بۆ `kst-3f1.pages.dev` دەچن، SSL چالاکە.
+- ماڵپەڕەکە ئیمەیڵ بەکارناهێنێت؛ پەیوەندی تەنیا لە ڕێگەی واتسئەپ و فۆرمەکەوەیە. ئەگەر دواتر ئیمەیڵت ویست، لە `Email` ← `Email Routing` ئاڕاستەی Gmail ـی بکە.
 
 ### ٥. دوای بڵاوکردنەوە
 

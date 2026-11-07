@@ -60,6 +60,7 @@ export const about = {
     },
   ] as { title: L10n; text: L10n }[],
   heading: { ku: 'دەربارەی ئێمە', en: 'About us', ar: 'من نحن' } as L10n,
+  whyTitle: { ku: 'بۆچی کڕیاران KST هەڵدەبژێرن', en: 'Why clients choose KST', ar: 'لماذا يختار العملاء KST' } as L10n,
 };
 
 export const servicesSection = {
@@ -87,7 +88,7 @@ export type ServiceKey =
   | 'construction' | 'hvac' | 'ventilation' | 'electrical' | 'cleanroom'
   | 'medical' | 'it' | 'pm';
 
-export const services: { key: ServiceKey; name: L10n; desc: L10n }[] = [
+export const services: { key: ServiceKey; name: L10n; desc: L10n; scope: L10n[] }[] = [
   {
     key: 'construction',
     name: { ku: 'بیناسازی گشتی و کارە شارستانییەکان', en: 'General construction & civil works', ar: 'البناء العام والأعمال المدنية' },
@@ -96,41 +97,88 @@ export const services: { key: ServiceKey; name: L10n; desc: L10n }[] = [
       en: 'Complete construction from design to handover: commercial buildings, hospitals, hotels and residential complexes.',
       ar: 'مشاريع بناء متكاملة من التصميم حتى التسليم: مبانٍ تجارية ومستشفيات وفنادق ومجمعات سكنية.',
     },
+    scope: [
+      { ku: 'کاری بیناسازی و تەواوکاری', en: 'Building and finishing works', ar: 'أعمال البناء والتشطيب' },
+      { ku: 'ناوەوەی بینا و دیکۆریشن', en: 'Interior fit-out and decoration', ar: 'التجهيز الداخلي والديكور' },
+      { ku: 'کلینیک، چێشتخانە، دوکان و ئۆفیس', en: 'Clinics, restaurants, shops and offices', ar: 'العيادات والمطاعم والمحلات والمكاتب' },
+      { ku: 'نۆژەنکردنەوەی بینای ئێستا', en: 'Renovating existing buildings', ar: 'تجديد المباني القائمة' },
+    ],
   },
   {
     key: 'hvac',
     name: { ku: 'سیستەمی ساردکەرەوە و HVAC', en: 'Refrigeration & HVAC', ar: 'أنظمة التبريد والتكييف' },
     desc: { ku: 'دامەزراندن و چاککردنەوەی سیستەمی ساردکەرەوە', en: 'Installation and servicing of cooling systems', ar: 'تركيب وصيانة أنظمة التبريد' },
+    scope: [
+      { ku: 'سیستەمی سپلیت، VRF/VRV و دەکت', en: 'Split, VRF/VRV and ducted systems', ar: 'أنظمة سبليت وVRF/VRV والمجاري' },
+      { ku: 'ساردکەرەوە و ژووری سارد', en: 'Refrigeration and cold rooms', ar: 'التبريد والغرف الباردة' },
+      { ku: 'هەژمارکردنی بارستایی و هەڵبژاردنی ئامێر', en: 'Load calculation and equipment selection', ar: 'حساب الأحمال واختيار المعدات' },
+      { ku: 'چاککردنەوە و چاودێری بەردەوام', en: 'Repair and regular servicing', ar: 'الإصلاح والصيانة الدورية' },
+    ],
   },
   {
     key: 'ventilation',
     name: { ku: 'سیستەمی ئایر فرێش و ڤێنتیلەیشن', en: 'Fresh air & ventilation', ar: 'أنظمة الهواء النقي والتهوية' },
     desc: { ku: 'چارەسەری هەوای پاک بۆ بیناکان', en: 'Clean-air solutions for buildings', ar: 'حلول الهواء النقي للمباني' },
+    scope: [
+      { ku: 'سیستەمی ئایر فرێش و هەواکێشان', en: 'Fresh-air and exhaust systems', ar: 'أنظمة الهواء النقي والشفط' },
+      { ku: 'یەکەی مامەڵەکردنی هەوا (AHU)', en: 'Air handling units (AHU)', ar: 'وحدات مناولة الهواء (AHU)' },
+      { ku: 'هەواکێشانی چێشتخانە', en: 'Kitchen extraction', ar: 'شفط المطابخ' },
+      { ku: 'هاوسەنگکردن و تاقیکردنەوەی هەوا', en: 'Air balancing and testing', ar: 'موازنة الهواء واختباره' },
+    ],
   },
   {
     key: 'electrical',
     name: { ku: 'ئەندازیاری کارەبا و وزە', en: 'Electrical systems & power', ar: 'الأنظمة الكهربائية والطاقة' },
     desc: { ku: 'سیستەمی کارەبای پڕۆفیشنەل بۆ هەموو جۆرە بیناکان', en: 'Professional electrical systems for every building type', ar: 'أنظمة كهربائية احترافية لجميع أنواع المباني' },
+    scope: [
+      { ku: 'تابلۆی دابەشکردن و کابل', en: 'Distribution panels and wiring', ar: 'لوحات التوزيع والتمديدات' },
+      { ku: 'مۆلیدە و کارەبای یەدەگ', en: 'Generators and backup power', ar: 'المولدات والطاقة الاحتياطية' },
+      { ku: 'ڕووناکی و ئەرسکردن', en: 'Lighting and earthing', ar: 'الإنارة والتأريض' },
+      { ku: 'پشکنین و تاقیکردنەوەی سەلامەتی', en: 'Safety inspection and testing', ar: 'فحص واختبار السلامة' },
+    ],
   },
   {
     key: 'cleanroom',
     name: { ku: 'هۆڵەکانی نەشتەرگەری و کلینرووم', en: 'Modular operating rooms & cleanrooms', ar: 'غرف العمليات المعيارية والغرف النظيفة' },
     desc: { ku: 'دامەزراندنی هۆڵی نەشتەرگەری بەپێی ستانداردی نێودەوڵەتی', en: 'Operating rooms built to international standards', ar: 'غرف عمليات وفق المعايير الدولية' },
+    scope: [
+      { ku: 'دامەزراندنی هۆڵی نەشتەرگەری', en: 'Operating theatre fit-out', ar: 'تجهيز غرف العمليات' },
+      { ku: 'فلتەری HEPA و هاوسەنگی پەستان', en: 'HEPA filters and room pressure balance', ar: 'فلاتر HEPA وموازنة ضغط الغرف' },
+      { ku: 'خزمەتگوزاری و پشکنینی خولی', en: 'Periodic servicing and checks', ar: 'الخدمة والفحص الدوري' },
+    ],
   },
   {
     key: 'medical',
     name: { ku: 'چاککردنەوەی ئامێری پزیشکی', en: 'Medical equipment maintenance', ar: 'صيانة المعدات الطبية' },
     desc: { ku: 'خزمەتگوزاری و چاککردنەوەی ئامێری پزیشکی', en: 'Servicing and repair of medical equipment', ar: 'خدمة وإصلاح المعدات الطبية' },
+    scope: [
+      { ku: 'چاککردنی بۆرد، تا ٧٠٪ هەرزانتر لە نرخی پارچەی کارگە', en: 'Board-level repair, up to 70% below factory module price', ar: 'إصلاح اللوحات بتكلفة أقل حتى 70% من سعر القطعة الأصلية' },
+      { ku: 'دابینکردنی سەربەخۆی ئامێر', en: 'Independent equipment sourcing', ar: 'توريد مستقل للمعدات' },
+      { ku: 'گەرەنتی درێژکراو: ٤ ساڵی زیاتر', en: 'Extended guarantee: 4 extra years', ar: 'ضمان ممتد: 4 سنوات إضافية' },
+      { ku: 'چاودێری پێشوەختە', en: 'Preventive maintenance', ar: 'الصيانة الوقائية' },
+    ],
   },
   {
     key: 'it',
     name: { ku: 'چارەسەری تەکنەلۆژی و ئایتی', en: 'IT solutions & smart systems', ar: 'حلول تكنولوجيا المعلومات والأنظمة الذكية' },
     desc: { ku: 'سیستەمی زیرەک و چارەسەری تەکنەلۆژی', en: 'Smart-building systems and IT infrastructure', ar: 'أنظمة ذكية وبنية تحتية لتقنية المعلومات' },
+    scope: [
+      { ku: 'تۆڕ و Wi-Fi', en: 'Networks and Wi-Fi', ar: 'الشبكات والواي فاي' },
+      { ku: 'کامێرای چاودێری (CCTV)', en: 'CCTV cameras', ar: 'كاميرات المراقبة' },
+      { ku: 'سیستەمی زیرەکی بینا', en: 'Smart building systems', ar: 'أنظمة المباني الذكية' },
+      { ku: 'ژووری سێرڤەر و ئایتی', en: 'Server and IT rooms', ar: 'غرف الخوادم وتقنية المعلومات' },
+    ],
   },
   {
     key: 'pm',
     name: { ku: 'سەرپەرشتیاریکردنی پرۆژە', en: 'Project management & supervision', ar: 'إدارة المشاريع والإشراف' },
     desc: { ku: 'بەڕێوەبردن و سەرپەرشتیاری پرۆژە', en: 'Management and on-site supervision', ar: 'إدارة المشاريع والإشراف الميداني' },
+    scope: [
+      { ku: 'سەرپەرشتی مەیدانی', en: 'On-site supervision', ar: 'الإشراف الميداني' },
+      { ku: 'پلان و خشتەی کات', en: 'Planning and scheduling', ar: 'التخطيط والجدولة' },
+      { ku: 'پشکنینی کوالیتی لە هەر قۆناغێک', en: 'Quality checks at every stage', ar: 'فحص الجودة في كل مرحلة' },
+      { ku: 'یەک گرێبەست بۆ هەموو بوارەکان', en: 'One contract for every trade', ar: 'عقد واحد لجميع التخصصات' },
+    ],
   },
 ];
 
@@ -142,6 +190,13 @@ export const clientsSection = {
   showMore: { ku: 'پیشاندانی زیاتر', en: 'Show more', ar: 'عرض المزيد' } as L10n,
   empty: { ku: 'هیچ کڕیارێک نەدۆزرایەوە.', en: 'No clients match. Clear the search or choose another filter.', ar: 'لا يوجد عملاء مطابقون. امسح البحث أو اختر تصنيفاً آخر.' } as L10n,
   count: { ku: 'کڕیار', en: 'clients', ar: 'عميل' } as L10n,
+  intro: {
+    ku: 'نەخۆشخانە، سەنتەری جوانکاری، هۆتێل، چێشتخانە و دامەزراوەی حکومی. بە سکڕۆڵکردن ببینە هەر پرۆژەیەک لە کوێیە و چ کارێکمان بۆ کردووە.',
+    en: 'Hospitals, beauty centres, hotels, restaurants and government offices. Scroll to see where each project is and what we did there.',
+    ar: 'مستشفيات ومراكز تجميل وفنادق ومطاعم ودوائر حكومية. مرّر لترى موقع كل مشروع وما أنجزناه فيه.',
+  } as L10n,
+  works: { ku: 'بوار', en: 'trades', ar: 'تخصصات' } as L10n,
+  mapLabel: { ku: 'نەخشەی پرۆژەکان لە هەولێر و پیرمام. ئێستا دیارکراو:', en: 'Map of projects in Erbil and Pirmam. Highlighted:', ar: 'خريطة المشاريع في أربيل وبيرمام. المحدد الآن:' } as L10n,
 };
 
 export const sectorLabels: Record<string, L10n> = {
@@ -150,7 +205,10 @@ export const sectorLabels: Record<string, L10n> = {
   Turnkey: { ku: 'تەواوکاری', en: 'Turnkey', ar: 'تسليم مفتاح' },
   Electrical: { ku: 'کارەبا', en: 'Electrical', ar: 'كهرباء' },
   IT: { ku: 'ئایتی', en: 'IT', ar: 'تقنية المعلومات' },
-  HVAC: { ku: 'ساردکەرەوە', en: 'HVAC', ar: 'تكييف' },
+  HVAC: { ku: 'ئێچ ڤاک (HVAC)', en: 'HVAC', ar: 'التكييف (HVAC)' },
+  Refrigeration: { ku: 'ساردکەرەوە', en: 'Refrigeration', ar: 'التبريد' },
+  CCTV: { ku: 'کامێرای چاودێری', en: 'CCTV cameras', ar: 'كاميرات المراقبة' },
+  Decoration: { ku: 'دیکۆریشن', en: 'Decoration', ar: 'الديكور' },
   Ventilation: { ku: 'ئایر فرێش', en: 'Ventilation', ar: 'تهوية' },
   Cleanroom: { ku: 'هۆڵی نەشتەرگەری', en: 'Operating rooms', ar: 'غرف العمليات' },
   Maintenance: { ku: 'چاککردنەوە', en: 'Medical maintenance', ar: 'صيانة طبية' },
@@ -172,6 +230,18 @@ export const contactSection = {
   } as L10n,
   address: { ku: 'ناونیشان', en: 'Address', ar: 'العنوان' } as L10n,
   phone: { ku: 'تەلەفۆن', en: 'Phone', ar: 'الهاتف' } as L10n,
+  whatsapp: { ku: 'واتسئەپ', en: 'WhatsApp', ar: 'واتساب' } as L10n,
+  whatsappLead: {
+    ku: 'ڕاستەوخۆ لە واتسئەپ نامەمان بۆ بنێرە، یان فۆرمەکە پڕ بکەرەوە.',
+    en: 'Message us directly on WhatsApp, or fill in the form.',
+    ar: 'راسلنا مباشرة على واتساب، أو املأ النموذج.',
+  } as L10n,
+  whatsappChat: { ku: 'نامە بنێرە', en: 'Chat now', ar: 'راسلنا الآن' } as L10n,
+  whatsappHello: {
+    ku: 'سڵاو KST، دەمەوێت دەربارەی پرۆژەیەک قسە بکەین.',
+    en: 'Hello KST, I would like to talk about a project.',
+    ar: 'مرحباً KST، أود التحدث عن مشروع.',
+  } as L10n,
   email: { ku: 'ئیمەیل', en: 'Email', ar: 'البريد الإلكتروني' } as L10n,
   name: { ku: 'ناو', en: 'Full name', ar: 'الاسم' } as L10n,
   company: { ku: 'کۆمپانیا', en: 'Company', ar: 'الشركة' } as L10n,
@@ -190,12 +260,12 @@ export const contactSection = {
   } as L10n,
   another: { ku: 'داواکاری نوێ', en: 'Send another request', ar: 'طلب جديد' } as L10n,
   error: {
-    ku: 'داواکارییەکە نەنێردرا. دووبارە هەوڵ بدەرەوە یان پەیوەندی بە تەلەفۆن بکە.',
-    en: 'Your request was not sent. Try again, or call us on one of the numbers listed.',
-    ar: 'لم يتم إرسال طلبك. حاول مرة أخرى أو اتصل بنا على أحد الأرقام.',
+    ku: 'داواکارییەکە نەنێردرا. دووبارە هەوڵ بدەرەوە یان لە واتسئەپ نامەمان بۆ بنێرە.',
+    en: 'Your request was not sent. Try again, or message us on WhatsApp.',
+    ar: 'لم يتم إرسال طلبك. حاول مرة أخرى أو راسلنا على واتساب.',
   } as L10n,
   mapTitle: { ku: 'شوێنی کۆمپانیا لەسەر نەخشە', en: 'Our location on the map', ar: 'موقعنا على الخريطة' } as L10n,
-  orReach: { ku: 'یان ڕاستەوخۆ پەیوەندی بکە:', en: 'Or reach us directly:', ar: 'أو تواصل معنا مباشرة:' } as L10n,
+  orReach: { ku: 'یان ڕاستەوخۆ لە واتسئەپ:', en: 'Or on WhatsApp:', ar: 'أو على واتساب:' } as L10n,
   invalid: {
     name: { ku: 'تکایە ناوت بنووسە.', en: 'Please enter your name.', ar: 'يرجى إدخال اسمك.' },
     phone: { ku: 'ژمارەیەکی دروست بنووسە (لانیکەم ٧ ژمارە).', en: 'Enter a valid phone number (at least 7 digits).', ar: 'أدخل رقم هاتف صحيحاً (7 أرقام على الأقل).' },
@@ -217,6 +287,8 @@ export const footer = {
     ar: 'شريكك الموثوق لحلول الهندسة المتكاملة في إقليم كردستان.',
   } as L10n,
   links: { ku: 'بەستەرەکان', en: 'Navigate', ar: 'روابط' } as L10n,
+  talk: { ku: 'پرۆژەیەکت هەیە؟', en: 'Have a project?', ar: 'لديك مشروع؟' } as L10n,
+  talkLink: { ku: 'لە واتسئەپ یان فۆرمەکەوە پەیوەندیمان پێوە بکە', en: 'Reach us on WhatsApp or through the form', ar: 'تواصل معنا عبر واتساب أو النموذج' } as L10n,
   rights: {
     ku: 'هەموو مافەکان پارێزراون.',
     en: 'All rights reserved.',

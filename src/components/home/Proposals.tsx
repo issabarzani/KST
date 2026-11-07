@@ -44,17 +44,6 @@ function Hvac() {
         </dl>
       </div>
 
-      <div>
-        <h3 className="text-xl font-extrabold text-white">{P.process[lang]}</h3>
-        <ol className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-md border border-white/15 bg-white/15 sm:grid-cols-4">
-          {hvac.steps.map((s, i) => (
-            <li key={s.en} className="bg-[hsl(var(--night-2))] p-4">
-              <span className="ltr-isolate flex h-8 w-8 items-center justify-center rounded-full border border-[hsl(var(--gold))] text-sm font-bold text-[hsl(var(--gold))]" style={{ fontFamily: 'var(--font-latin)' }}>{i + 1}</span>
-              <p className="mt-3 text-sm font-semibold text-white">{s[lang]}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
 
       <div className="grid gap-5 md:grid-cols-2">
         <section className={card}>

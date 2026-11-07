@@ -1,5 +1,6 @@
 import { useLang } from '@/lib/lang-context';
 import { about } from '@/lib/i18n';
+import { hvac } from '@/lib/proposals';
 
 export default function About() {
   const { lang } = useLang();
@@ -23,6 +24,18 @@ export default function About() {
           <p className="mt-8 max-w-prose border-s-4 border-[hsl(var(--accent))] bg-card py-4 pe-4 ps-5 text-[0.95rem] font-semibold text-foreground shadow-sm">
             {about.pricing[lang]}
           </p>
+        </div>
+
+        <div className="lg:col-span-2">
+          <h3 className="text-xl font-extrabold sm:text-2xl">{about.whyTitle[lang]}</h3>
+          <dl className="mt-6 grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2 lg:grid-cols-5">
+            {hvac.why.map((w) => (
+              <div key={w.title.en} className="bg-card p-5">
+                <dt className="font-extrabold leading-snug text-primary">{w.title[lang]}</dt>
+                <dd className="mt-2 text-[0.95rem] leading-relaxed text-foreground/80">{w.text[lang]}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </div>
     </section>

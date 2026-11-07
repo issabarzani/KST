@@ -1,12 +1,13 @@
 import { Helmet } from '@dr.pogodin/react-helmet';
-import { home } from 'virtual:content';
 import Hero from '@/components/home/Hero';
 import About from '@/components/home/About';
 import Services from '@/components/home/Services';
+import Process from '@/components/home/Process';
 import Proposals from '@/components/home/Proposals';
 import Clients from '@/components/home/Clients';
 import Contact from '@/components/home/Contact';
 import { services } from '@/lib/i18n';
+import { whatsappNumbers } from '@/lib/contact';
 
 const SITE = 'https://kurdistanserviceteam.com';
 const TITLE = 'Kurdistan Service Team — تیمی خزمەتگوزاری کوردستان';
@@ -24,8 +25,7 @@ const business = {
   logo: `${SITE}/assets/kst-logo.png`,
   image: `${SITE}/assets/og-image.jpg`,
   description: DESC,
-  email: home.contact.email,
-  telephone: [home.contact.phone1, home.contact.phone2, home.contact.phone3, home.contact.phone4].map((p) => p.replace(/\s/g, '')),
+  telephone: whatsappNumbers.map((p) => p.replace(/\s/g, '')),
   address: {
     '@type': 'PostalAddress',
     streetAddress: 'Swiss Mall, Pirmam',
@@ -67,6 +67,7 @@ export default function HomePage() {
         <Hero />
         <About />
         <Services />
+        <Process />
         <Proposals />
         <Clients />
         <Contact />

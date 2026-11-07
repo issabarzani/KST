@@ -1,15 +1,57 @@
 [
   {
+    "id": "Ug54iEYXKMoyWeD-rHPqI",
+    "nameKu": "شامی سەنتەر - نەخۆشخانەی چاو",
+    "nameEn": "Shami Center Eye Hospital",
+    "nameAr": "مستشفى شامي سنتر للعيون",
+    "sectors": [
+      "HVAC",
+      "Refrigeration"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "j_1LKIsvWD-NNJ10AzWtT",
+    "nameKu": "ئێس کوین سەنتەر بیوتی",
+    "nameEn": "S Queen Beauty Center",
+    "nameAr": "مركز إس كوين للتجميل",
+    "sectors": [
+      "HVAC",
+      "Electrical"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "yzPvWCGl1FlZR0ECkfX2q",
+    "nameKu": "بلۆم سەنتەر بیوتی",
+    "nameEn": "Bloom Beauty Center",
+    "nameAr": "مركز بلوم للتجميل",
+    "sectors": [
+      "Electrical",
+      "Refrigeration"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
     "id": "KN2j7wQe9Dm96_RIHA3YF",
     "nameKu": "هۆتێلی گراند سویس",
     "nameEn": "Hotel Grand Swiss",
     "nameAr": "فندق غراند سويس",
     "sectors": [
-      "Construction"
+      "HVAC",
+      "Electrical",
+      "Refrigeration",
+      "IT"
     ],
-    "location": "هەولێر",
-    "locationEn": "Erbil",
-    "locationAr": "أربيل"
+    "location": "پیرمام",
+    "locationEn": "Pirmam",
+    "locationAr": "بيرمام"
   },
   {
     "id": "DqRr6RXd-54-UtMQvi-GR",
@@ -17,7 +59,80 @@
     "nameEn": "Salamati Hospital",
     "nameAr": "مستشفى سلامتي",
     "sectors": [
-      "Medical"
+      "HVAC",
+      "Refrigeration",
+      "CCTV",
+      "Cleanroom",
+      "IT"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "5khV1r8PzVRk7sNGCxizc",
+    "nameKu": "کۆرەک تێلیکۆم",
+    "nameEn": "Korek Telecom",
+    "nameAr": "كورك تيليكوم",
+    "sectors": [
+      "Refrigeration"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "4XGSGZH0oAYp59XhtqRLn",
+    "nameKu": "مێلت بەرگەر و کۆفی",
+    "nameEn": "Melt Burger and Coffee",
+    "nameAr": "ملت برغر وكوفي",
+    "sectors": [
+      "Electrical",
+      "Refrigeration",
+      "IT",
+      "Decoration"
+    ],
+    "location": "پیرمام",
+    "locationEn": "Pirmam",
+    "locationAr": "بيرمام"
+  },
+  {
+    "id": "hOoQPVFAOVCUsSnikevEu",
+    "nameKu": "خان بیوتی سەنتەر",
+    "nameEn": "Khan Beauty Center",
+    "nameAr": "مركز خان للتجميل",
+    "sectors": [
+      "Electrical",
+      "HVAC"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "p08-4FkYY_oKjvOSf9ey_",
+    "nameKu": "پرۆتۆکۆڵی حکومەت",
+    "nameEn": "Government Protocol",
+    "nameAr": "البروتوكول الحكومي",
+    "sectors": [
+      "Refrigeration",
+      "Electrical"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "dlzhLcM9bp9Xg87l4i96_",
+    "nameKu": "ڕۆ ناز بیوتی سەنتەر",
+    "nameEn": "Ro Naz Beauty Center",
+    "nameAr": "مركز رو ناز للتجميل",
+    "sectors": [
+      "Construction",
+      "Cleanroom",
+      "Electrical",
+      "HVAC",
+      "IT"
     ],
     "location": "هەولێر",
     "locationEn": "Erbil",
@@ -66,30 +181,6 @@
     "nameAr": "لجنة الحزب الديمقراطي الكردستاني",
     "sectors": [
       "Electrical"
-    ],
-    "location": "هەولێر",
-    "locationEn": "Erbil",
-    "locationAr": "أربيل"
-  },
-  {
-    "id": "5khV1r8PzVRk7sNGCxizc",
-    "nameKu": "کۆرەک تێلیکۆم",
-    "nameEn": "Korek Telecom",
-    "nameAr": "كورك تيليكوم",
-    "sectors": [
-      "IT"
-    ],
-    "location": "هەولێر",
-    "locationEn": "Erbil",
-    "locationAr": "أربيل"
-  },
-  {
-    "id": "4XGSGZH0oAYp59XhtqRLn",
-    "nameKu": "مێلت بەرگەر و کۆفی",
-    "nameEn": "Melt Burger and Coffee",
-    "nameAr": "ملت برغر وكوفي",
-    "sectors": [
-      "Construction"
     ],
     "location": "هەولێر",
     "locationEn": "Erbil",
