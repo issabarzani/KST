@@ -1,0 +1,98 @@
+[
+  {
+    "id": "KN2j7wQe9Dm96_RIHA3YF",
+    "nameKu": "هۆتێلی گراند سویس",
+    "nameEn": "Hotel Grand Swiss",
+    "nameAr": "فندق غراند سويس",
+    "sectors": [
+      "Construction"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "DqRr6RXd-54-UtMQvi-GR",
+    "nameKu": "نەخۆشخانەی سەلامەتی",
+    "nameEn": "Salamati Hospital",
+    "nameAr": "مستشفى سلامتي",
+    "sectors": [
+      "Medical"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "sH4Vn0AhTI3wnlCppbb-m",
+    "nameKu": "سەبا هۆلدینگ",
+    "nameEn": "Saba Holding",
+    "nameAr": "سبا هولدينغ",
+    "sectors": [
+      "Turnkey"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "RBcQKCb4bGreuXhG9VVa1",
+    "nameKu": "کلینیکی باران بیوتی",
+    "nameEn": "Baran Beauty Clinic",
+    "nameAr": "عيادة باران للتجميل",
+    "sectors": [
+      "Medical"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "nGkrzMGP4cnIdZZteI5Ae",
+    "nameKu": "سێکتەری حکومی هەرێمی کوردستان",
+    "nameEn": "Government Sector KRG",
+    "nameAr": "القطاع الحكومي لإقليم كردستان",
+    "sectors": [
+      "Construction"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "AssTQXSyHcxfuJ9LS54Ff",
+    "nameKu": "کمیتەی پارتی دیموکراتی کوردستان",
+    "nameEn": "KDP Committee",
+    "nameAr": "لجنة الحزب الديمقراطي الكردستاني",
+    "sectors": [
+      "Electrical"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "5khV1r8PzVRk7sNGCxizc",
+    "nameKu": "کۆرەک تێلیکۆم",
+    "nameEn": "Korek Telecom",
+    "nameAr": "كورك تيليكوم",
+    "sectors": [
+      "IT"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  },
+  {
+    "id": "4XGSGZH0oAYp59XhtqRLn",
+    "nameKu": "مێلت بەرگەر و کۆفی",
+    "nameEn": "Melt Burger and Coffee",
+    "nameAr": "ملت برغر وكوفي",
+    "sectors": [
+      "Construction"
+    ],
+    "location": "هەولێر",
+    "locationEn": "Erbil",
+    "locationAr": "أربيل"
+  }
+]

@@ -1,0 +1,12 @@
+/* Auto-generated reposition overrides — do not edit manually */
+
+img[src$="/airo-assets/images/logo/horizontal?_v=1793314673870"] {
+  object-fit: contain !important;
+  object-position: 50% 50% !important;
+  transform: scale(1.2000000000000002) !important;
+  transform-origin: 50% 50% !important;
+}
+
+:has(> img[src$="/airo-assets/images/logo/horizontal?_v=1793314673870"]) {
+  overflow: hidden;
+}

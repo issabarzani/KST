@@ -1,0 +1,63 @@
+{
+  "hero": {
+    "badge": "هەولێر، هەرێمی کوردستان — Erbil, Kurdistan Region",
+    "headlineKu1": "تیمی خزمەتگوزاری",
+    "headlineKu2": "کوردستان",
+    "subheadlineEn": "Your Trusted Partner for Turnkey Engineering Solutions",
+    "subheadlineAr": "شريكك الموثوق لحلول الهندسة المتكاملة",
+    "ctaPrimary": "داوای نرخ بکە / Get a Quote",
+    "ctaSecondary": "خزمەتگوزاریەکان / Our Services",
+    "stat1Value": "10+",
+    "stat1LabelKu": "بواری پسپۆڕ",
+    "stat1LabelEn": "Sectors",
+    "stat2Value": "100+",
+    "stat2LabelKu": "پرۆژەی تەواوکراو",
+    "stat2LabelEn": "Projects",
+    "stat3Value": "15+",
+    "stat3LabelKu": "ساڵی ئەزموون",
+    "stat3LabelEn": "Years Exp."
+  },
+  "about": {
+    "sectionLabel": "About Us / دەربارەی ئێمە / عنّا",
+    "headingKu": "کێین و چی دەکەین؟",
+    "headingEn": "Who We Are & What We Do",
+    "bodyKu": "تیمی خزمەتگوزاری کوردستان (KST) کۆمپانیایەکی ئەندازیاری و بیناسازی پسپۆڕە کە لە هەولێر، هەرێمی کوردستان دامەزراوە. ئێمە چارەسەری تەواو بۆ پرۆژەی بیناسازی، ئەندازیاری، و دامەزراندنی کۆمپانیا دەدەین.",
+    "bodyEn": "Kurdistan Service Team (KST) is a specialized engineering and construction company based in Erbil, Kurdistan Region. We deliver complete turnkey solutions across 10 specialized sectors — from civil works to smart IT systems.",
+    "pricingNoteKu": "نرخەکانمان لەسەر پێکهاتە و تایبەتمەندییەکانی پرۆژەکەت دادەنرێت.",
+    "pricingNoteEn": "Pricing is tailored to your project scope and specifications.",
+    "statValue": "100+",
+    "statLabelKu": "پرۆژەی تەواوکراو",
+    "statLabelEn": "Completed Projects"
+  },
+  "services": {
+    "sectionLabel": "Services / خزمەتگوزاریەکان / خدماتنا",
+    "headingKu": "بواری خزمەتگوزاریەکانمان",
+    "headingEn": "Our completed projects across Kurdistan Region"
+  },
+  "portfolio": {
+    "headingKu": "پرۆژەکانمان",
+    "headingEn": "Our Projects across Kurdistan Region"
+  },
+  "contact": {
+    "sectionLabel": "Contact / پەیوەندی / اتصل بنا",
+    "headingKu": "پەیوەندیمان پێوە بکە",
+    "headingEn": "Get in touch — نحن هنا لمساعدتك",
+    "pricingBadgeKu": "نرخ لەسەر پێکهاتەی پرۆژەکەت دادەنرێت",
+    "pricingBadgeEn": "Pricing based on project scope & specifications",
+    "detailsHeadingKu": "زانیاری پەیوەندی",
+    "addressKu": "سویسس موڵ - پیرمام - هەولێر، هەرێمی کوردستان",
+    "addressEn": "Swiss Mall - Pirmam - Erbil, Kurdistan Region",
+    "addressAr": "سويس مول - بيرمام - أربيل، إقليم كردستان",
+    "phone1": "+964 751 798 4505",
+    "phone2": "+964 750 434 1240",
+    "phone3": "+964 750 813 3906",
+    "phone4": "+964 750 782 4846",
+    "email": "info@kurdistanserviceteam.com",
+    "coordinates": "36.1901° N, 44.0091° E",
+    "submitBtn": "داواکاری بنێرە / Send Request / إرسال الطلب",
+    "successHeadingKu": "سوپاس! داواکارییەکەت وەرگیرا",
+    "successEn": "Thank you! Your request has been received.",
+    "successAr": "شكراً! تم استلام طلبك.",
+    "newRequestBtn": "داواکاری نوێ / New Request"
+  }
+}

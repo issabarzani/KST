@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KST Projects Manager</title>
+<style>
+  :root{--bg:#f3f6f9;--card:#fff;--ink:#101a28;--muted:#5b6878;--line:#d5dce5;--blue:#1d4e7e;--gold:#a3782a;--danger:#b3261e;--ok:#17734f}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Arabic",sans-serif}
+  header{background:#0b1b2e;color:#fff;padding:18px 24px;display:flex;flex-wrap:wrap;gap:12px 24px;align-items:center;justify-content:space-between}
+  header h1{margin:0;font-size:19px}
+  header p{margin:2px 0 0;color:#aab8c8;font-size:13px}
+  .bar{display:flex;gap:8px;flex-wrap:wrap}
+  button,.btn{font:inherit;font-weight:600;border-radius:6px;border:1px solid var(--line);background:#fff;color:var(--ink);padding:9px 14px;cursor:pointer;min-height:40px}
+  button:hover{border-color:var(--blue)}
+  .primary{background:var(--blue);border-color:var(--blue);color:#fff}
+  .primary:hover{background:#163f66}
+  .gold{background:#d9ab4d;border-color:#d9ab4d;color:#101a28}
+  .danger{color:var(--danger)}
+  :focus-visible{outline:3px solid #d9ab4d;outline-offset:2px}
+  main{display:grid;grid-template-columns:minmax(300px,420px) 1fr;gap:24px;padding:24px;max-width:1300px;margin:auto}
+  @media(max-width:900px){main{grid-template-columns:1fr;padding:16px}}
+  section{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:20px}
+  h2{margin:0 0 14px;font-size:16px}
+  label{display:block;font-weight:600;font-size:13px;margin:12px 0 4px}
+  input[type=text],input[type=search],select{width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:6px;font:inherit;background:#fff}
+  input[dir=rtl]{text-align:right}
+  .works{display:flex;flex-wrap:wrap;gap:6px}
+  .works label{display:inline-flex;align-items:center;gap:6px;margin:0;font-weight:500;border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer;font-size:13px;user-select:none}
+  .works input{margin:0}
+  .works label:has(input:checked){background:#e5eef7;border-color:var(--blue);color:var(--blue);font-weight:700}
+  .row{display:flex;gap:8px}
+  .row>*{flex:1}
+  .actions{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}
+  .hint{font-size:12.5px;color:var(--muted);margin-top:4px}
+  table{width:100%;border-collapse:collapse}
+  th,td{text-align:start;padding:10px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:12px;color:var(--muted)}
+  td .tag{display:inline-block;background:#e5eef7;color:var(--blue);font-size:12px;font-weight:700;border-radius:4px;padding:2px 8px;margin:2px 4px 2px 0}
+  td .ku{direction:rtl;color:var(--muted);font-size:13px}
+  .tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .tools input{flex:1;min-width:180px}
+  .status{font-size:13px;color:var(--muted)}
+  .status b{color:var(--ink)}
+  .dirty{color:var(--gold);font-weight:700}
+  .toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#101a28;color:#fff;padding:11px 18px;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s;max-width:90vw;z-index:9}
+  .toast.show{opacity:1}
+  .small{padding:5px 10px;min-height:32px;font-size:13px}
+  details{margin-top:18px;font-size:13.5px;color:var(--muted)}
+  details summary{cursor:pointer;font-weight:600;color:var(--ink)}
+  details ol{padding-inline-start:20px;margin:8px 0}
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>KST Projects Manager</h1>
+    <p>Add, edit and remove the clients shown in the "Projects" section of the website.</p>
+  </div>
+  <div class="bar">
+    <button id="importBtn">Open portfolio.json…</button>
+    <input type="file" id="importFile" accept="application/json,.json" hidden />
+    <button id="copyBtn">Copy JSON</button>
+    <button id="downloadBtn" class="gold">Download portfolio.json</button>
+  </div>
+</header>
+
+<main>
+  <section aria-labelledby="formTitle">
+    <h2 id="formTitle">Add a client</h2>
+    <form id="form" autocomplete="off">
+      <label for="nameKu">Name in Kurdish</label>
+      <input type="text" id="nameKu" dir="rtl" required />
+      <label for="nameEn">Name in English</label>
+      <input type="text" id="nameEn" required />
+      <label for="nameAr">Name in Arabic</label>
+      <input type="text" id="nameAr" dir="rtl" required />
+
+      <label>Works we did for this client <span class="hint">(tick all that apply)</span></label>
+      <div class="works" id="works"></div>
+      <div class="row" style="margin-top:8px">
+        <input type="text" id="customWork" placeholder="Other work, e.g. Fire safety" />
+        <button type="button" id="addWork" style="flex:0 0 auto">Add</button>
+      </div>
+      <div class="hint">A new work name also needs one label line in <code>src/lib/i18n.ts</code> to show in Kurdish and Arabic. See the guide at the bottom.</div>
+
+      <label for="loc">Location</label>
+      <select id="loc"></select>
+      <div id="customLoc" hidden>
+        <div class="row" style="margin-top:8px">
+          <input type="text" id="locKu" dir="rtl" placeholder="Kurdish" />
+          <input type="text" id="locEn" placeholder="English" />
+          <input type="text" id="locAr" dir="rtl" placeholder="Arabic" />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button type="submit" class="primary" id="saveBtn">Add client</button>
+        <button type="button" id="cancelBtn" hidden>Cancel edit</button>
+      </div>
+    </form>
+
+    <details>
+      <summary>How to put the changes on the website</summary>
+      <ol>
+        <li>Press <b>Download portfolio.json</b>.</li>
+        <li>In the project, replace <code>src/content/data/portfolio.json</code> with the downloaded file.</li>
+        <li>Run <code>npm run build</code> and publish as usual.</li>
+      </ol>
+      <p>New works not in the list: add one line to <code>sectorLabels</code> in <code>src/lib/i18n.ts</code>:<br><code>'Fire safety': { ku: '…', en: 'Fire safety', ar: '…' },</code></p>
+    </details>
+  </section>
+
+  <section aria-labelledby="listTitle">
+    <h2 id="listTitle">Clients <span class="status" id="count"></span></h2>
+    <div class="tools">
+      <input type="search" id="search" placeholder="Search clients…" aria-label="Search clients" />
+      <select id="filterWork" aria-label="Filter by work" style="max-width:200px"></select>
+      <button id="resetBtn" class="small">Reset to site data</button>
+    </div>
+    <p class="status" id="saved"></p>
+    <div style="overflow-x:auto">
+      <table>
+        <thead><tr><th>Client</th><th>Works</th><th>Location</th><th></th></tr></thead>
+        <tbody id="rows"></tbody>
+      </table>
+    </div>
+    <p id="empty" class="status" hidden>No clients match.</p>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const ORIGINAL = [{"id": "KN2j7wQe9Dm96_RIHA3YF", "nameKu": "هۆتێلی گراند سویس", "nameEn": "Hotel Grand Swiss", "nameAr": "فندق غراند سويس", "sectors": ["Construction"], "location": "هەولێر", "locationEn": "Erbil", "locationAr": "أربيل"}, {"id": "DqRr6RXd-54-UtMQvi-GR", "nameKu": "نەخۆشخانەی سەلامەتی", "nameEn": "Salamati Hospital", "nameAr": "مستشفى سلامتي", "sectors": ["Medical"], "location": "هەولێر", "locationEn": "Erbil", "locationAr": "أربيل"}, {"id": "sH4Vn0AhTI3wnlCppbb-m", "nameKu": "سەبا هۆلدینگ", "nameEn": "Saba Holding", "nameAr": "سبا هولدينغ", "sectors": ["Turnkey"], "location": "هەولێر", "locationEn": "Erbil", "locationAr": "أربيل"}, {"id": "RBcQKCb4bGreuXhG9VVa1", "nameKu": "کلینیکی باران بیوتی", "nameEn": "Baran Beauty Clinic", "nameAr": "عيادة باران للتجميل", "sectors": ["Medical"], "location": "هەولێر", "locationEn": "Erbil", "locationAr": "أربيل"}, {"id": "nGkrzMGP4cnIdZZteI5Ae", "nameKu": "سێکتەری حکومی هەرێمی کوردستان", "nameEn": "Government Sector KRG", "nameAr": "القطاع الحكومي لإقليم كردستان", "sectors": ["Construction"], "location": "هەولێر", "locationEn": "Erbil", "locationAr": "أربيل"}, {"id": "AssTQXSyHcxfuJ9LS54Ff", "nameKu": "کمیتەی پارتی دیموکراتی کوردستان", "nameEn": "KDP Committee", "nameAr": "لجنة الحزب الديمقراطي الكردستاني", "sectors": ["Electrical"], "location": "هەولێر", "locationEn": "Erbil", "locationAr": "أربيل"}, {"id": "5khV1r8PzVRk7sNGCxizc", "nameKu": "کۆرەک تێلیکۆم", "nameEn": "Korek Telecom", "nameAr": "كورك تيليكوم", "sectors": ["IT"], "location": "هەولێر", "locationEn": "Erbil", "locationAr": "أربيل"}, {"id": "4XGSGZH0oAYp59XhtqRLn", "nameKu": "مێلت بەرگەر و کۆفی", "nameEn": "Melt Burger and Coffee", "nameAr": "ملت برغر وكوفي", "sectors": ["Construction"], "location": "هەولێر", "locationEn": "Erbil", "locationAr": "أربيل"}];
+const KEY = 'kst-projects-draft-v1';
+const WORKS = {
+  Construction:'Construction', HVAC:'HVAC', Ventilation:'Ventilation', Electrical:'Electrical',
+  Cleanroom:'Operating rooms', Medical:'Medical', Maintenance:'Medical maintenance',
+  IT:'IT', Supervision:'Supervision', Turnkey:'Turnkey'
+};
+const LOCS = [
+  ['هەولێر','Erbil','أربيل'],['سلێمانی','Sulaymaniyah','السليمانية'],['دهۆک','Duhok','دهوك'],
+  ['هەڵەبجە','Halabja','حلبجة'],['سۆران','Soran','سوران'],['کۆیە','Koya','كويسنجق'],['زاخۆ','Zakho','زاخو']
+];
+const $ = (id) => document.getElementById(id);
+let data = clone(ORIGINAL);
+let editing = null;      // id being edited
+let dirty = false;
+let customWorks = [];    // work names added this session
+
+try { const s = localStorage.getItem(KEY); if (s) { data = JSON.parse(s); dirty = true; } } catch {}
+function clone(x){ return JSON.parse(JSON.stringify(x)); }
+function persist(){
+  dirty = true;
+  try { localStorage.setItem(KEY, JSON.stringify(data)); } catch {}
+  render();
+}
+function toast(msg){ const t=$('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toast.t); toast.t=setTimeout(()=>t.classList.remove('show'),2600); }
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function slug(s){ return s.toLowerCase().normalize('NFKD').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'') || 'client'; }
+function uniqueId(base){ let id=slug(base), n=2; const used=new Set(data.map(d=>d.id)); while(used.has(id)) id=slug(base)+'-'+n++; return id; }
+function allWorks(){
+  const set = new Set([...Object.keys(WORKS), ...customWorks]);
+  data.forEach(d => d.sectors.forEach(s => set.add(s)));
+  return [...set];
+}
+function renderWorks(checked=[]){
+  const box = $('works'); box.innerHTML='';
+  allWorks().forEach(w=>{
+    const l=document.createElement('label');
+    l.innerHTML=`<input type="checkbox" value="${esc(w)}" ${checked.includes(w)?'checked':''}> ${esc(WORKS[w]||w)}`;
+    box.appendChild(l);
+  });
+}
+function renderLoc(sel){
+  const s=$('loc'); s.innerHTML=LOCS.map((l,i)=>`<option value="${i}">${l[1]} — ${l[0]}</option>`).join('')+'<option value="other">Other place…</option>';
+  if (sel!==undefined) s.value=sel;
+  $('customLoc').hidden = s.value!=='other';
+}
+function render(){
+  // filter dropdown
+  const f=$('filterWork'), cur=f.value;
+  f.innerHTML='<option value="">All works</option>'+allWorks().filter(w=>data.some(d=>d.sectors.includes(w))).map(w=>`<option value="${esc(w)}">${esc(WORKS[w]||w)}</option>`).join('');
+  f.value=cur;
+  const q=$('search').value.trim().toLowerCase(), fw=f.value;
+  const list=data.filter(d=>(!fw||d.sectors.includes(fw))&&(!q||[d.nameKu,d.nameEn,d.nameAr].some(n=>n.toLowerCase().includes(q))));
+  $('rows').innerHTML=list.map(d=>`<tr>
+    <td><b>${esc(d.nameEn)}</b><div class="ku">${esc(d.nameKu)}</div></td>
+    <td>${d.sectors.map(s=>`<span class="tag">${esc(WORKS[s]||s)}</span>`).join('')}</td>
+    <td>${esc(d.locationEn)}</td>
+    <td style="white-space:nowrap"><button class="small" data-edit="${esc(d.id)}">Edit</button> <button class="small danger" data-del="${esc(d.id)}">Remove</button></td></tr>`).join('');
+  $('empty').hidden=list.length>0;
+  $('count').textContent=`(${list.length}${list.length!==data.length?' of '+data.length:''})`;
+  $('saved').innerHTML = dirty ? '<span class="dirty">Draft with changes.</span> Download portfolio.json to use it on the website. Your draft stays in this browser.' : 'Showing the clients currently on the website.';
+}
+function resetForm(){
+  editing=null; $('form').reset(); renderWorks(); renderLoc(0);
+  $('formTitle').textContent='Add a client'; $('saveBtn').textContent='Add client'; $('cancelBtn').hidden=true;
+}
+$('loc').addEventListener('change',()=>{ $('customLoc').hidden=$('loc').value!=='other'; });
+$('addWork').addEventListener('click',()=>{
+  const v=$('customWork').value.trim(); if(!v) return;
+  const name=v.replace(/\s+/g,' ');
+  const checked=[...document.querySelectorAll('#works input:checked')].map(i=>i.value);
+  if(!allWorks().some(w=>w.toLowerCase()===name.toLowerCase())) customWorks.push(name);
+  const exact=allWorks().find(w=>w.toLowerCase()===name.toLowerCase());
+  renderWorks([...checked, exact]); $('customWork').value='';
+});
+$('form').addEventListener('submit',(e)=>{
+  e.preventDefault();
+  const sectors=[...document.querySelectorAll('#works input:checked')].map(i=>i.value);
+  if(!sectors.length){ toast('Tick at least one work.'); return; }
+  let loc;
+  if($('loc').value==='other'){ loc=[$('locKu').value.trim(),$('locEn').value.trim(),$('locAr').value.trim()]; if(loc.some(x=>!x)){toast('Fill the location in all three languages.');return;} }
+  else loc=LOCS[+$('loc').value];
+  const rec={ id:editing||uniqueId($('nameEn').value), nameKu:$('nameKu').value.trim(), nameEn:$('nameEn').value.trim(), nameAr:$('nameAr').value.trim(),
+    sectors, location:loc[0], locationEn:loc[1], locationAr:loc[2] };
+  if(editing){ const i=data.findIndex(d=>d.id===editing); data[i]=rec; toast('Client updated.'); }
+  else { data.unshift(rec); toast('Client added at the top of the list.'); }
+  persist(); resetForm();
+});
+$('cancelBtn').addEventListener('click',resetForm);
+$('rows').addEventListener('click',(e)=>{
+  const ed=e.target.closest('[data-edit]'), dl=e.target.closest('[data-del]');
+  if(ed){
+    const d=data.find(x=>x.id===ed.dataset.edit); editing=d.id;
+    $('nameKu').value=d.nameKu; $('nameEn').value=d.nameEn; $('nameAr').value=d.nameAr;
+    renderWorks(d.sectors);
+    const i=LOCS.findIndex(l=>l[1]===d.locationEn); renderLoc(i>=0?i:'other');
+    if(i<0){ $('locKu').value=d.location; $('locEn').value=d.locationEn; $('locAr').value=d.locationAr; }
+    $('formTitle').textContent='Edit client'; $('saveBtn').textContent='Save changes'; $('cancelBtn').hidden=false;
+    $('nameEn').focus(); window.scrollTo({top:0,behavior:'smooth'});
+  }
+  if(dl){
+    const d=data.find(x=>x.id===dl.dataset.del);
+    if(confirm(`Remove "${d.nameEn}" from the list?`)){ data=data.filter(x=>x.id!==d.id); if(editing===d.id) resetForm(); persist(); toast('Removed. Download portfolio.json to apply it to the website.'); }
+  }
+});
+$('search').addEventListener('input',render); $('filterWork').addEventListener('change',render);
+function json(){ return JSON.stringify(data.map(d=>({id:d.id,nameKu:d.nameKu,nameEn:d.nameEn,nameAr:d.nameAr,sectors:d.sectors,location:d.location,locationEn:d.locationEn,locationAr:d.locationAr})),null,2)+'\n'; }
+$('downloadBtn').addEventListener('click',()=>{
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([json()],{type:'application/json'})); a.download='portfolio.json'; a.click(); URL.revokeObjectURL(a.href);
+  toast('Downloaded. Replace src/content/data/portfolio.json with it.');
+});
+$('copyBtn').addEventListener('click',async()=>{ try{ await navigator.clipboard.writeText(json()); toast('JSON copied.'); }catch{ toast('Copy is blocked here. Use Download instead.'); } });
+$('importBtn').addEventListener('click',()=>$('importFile').click());
+$('importFile').addEventListener('change',async(e)=>{
+  const file=e.target.files[0]; if(!file) return;
+  try{
+    const arr=JSON.parse(await file.text());
+    if(!Array.isArray(arr)) throw new Error('not a list');
+    data=arr.map(r=>({ id:r.id||uniqueId(r.nameEn||'client'), nameKu:r.nameKu||'', nameEn:r.nameEn||'', nameAr:r.nameAr||'',
+      sectors:Array.isArray(r.sectors)?r.sectors:(r.sector?[r.sector]:[]), location:r.location||'', locationEn:r.locationEn||'', locationAr:r.locationAr||'' }));
+    persist(); toast(`Opened ${data.length} clients.`);
+  }catch(err){ toast('That file is not a valid portfolio.json.'); }
+  e.target.value='';
+});
+$('resetBtn').addEventListener('click',()=>{
+  if(!confirm('Discard your draft and go back to the list currently on the website?')) return;
+  data=clone(ORIGINAL); dirty=false; try{localStorage.removeItem(KEY);}catch{} resetForm(); render(); toast('Draft discarded.');
+});
+window.addEventListener('beforeunload',(e)=>{ /* draft is auto-saved in the browser, nothing to warn about */ });
+resetForm(); render();
+</script>
+</body>
+</html>

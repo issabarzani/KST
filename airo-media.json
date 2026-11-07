@@ -1,0 +1,240 @@
+{
+  "logo/horizontal": {
+    "mediaType": "logo",
+    "currentUrl": "/airo-assets/uploads/logo-horizontal-92f98a4d.png",
+    "searchQuery": "",
+    "alternatives": [
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-transparent-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png",
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/da8b9239-28f3-4b9b-a74b-cf1a8461d473/favicon-transparent-b5c1e11c-1f30-4c0c-9ed3-26b3c9336207/logo-logo.png",
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/51f3b563-4e55-4bea-a4b3-e3fedef68b00/horizontal-transparent-9cc15a18-207c-4de5-9c46-77456ebe7dd6/logo-logo.png"
+    ],
+    "productMockupsMap": {
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/51f3b563-4e55-4bea-a4b3-e3fedef68b00/horizontal-transparent-9cc15a18-207c-4de5-9c46-77456ebe7dd6/logo-logo.png": [
+        {
+          "type": "mug",
+          "label": "Mug",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/51f3b563-4e55-4bea-a4b3-e3fedef68b00/horizontal-mockup-mug-9cc15a18-207c-4de5-9c46-77456ebe7dd6/logo-logo.png"
+        },
+        {
+          "type": "card",
+          "label": "Business Card",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/51f3b563-4e55-4bea-a4b3-e3fedef68b00/horizontal-mockup-card-9cc15a18-207c-4de5-9c46-77456ebe7dd6/logo-logo.png"
+        },
+        {
+          "type": "tshirt",
+          "label": "T-Shirt",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/51f3b563-4e55-4bea-a4b3-e3fedef68b00/horizontal-mockup-tshirt-9cc15a18-207c-4de5-9c46-77456ebe7dd6/logo-logo.png"
+        },
+        {
+          "type": "box",
+          "label": "Packaging",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/51f3b563-4e55-4bea-a4b3-e3fedef68b00/horizontal-mockup-box-9cc15a18-207c-4de5-9c46-77456ebe7dd6/logo-logo.png"
+        }
+      ],
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-transparent-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png": [
+        {
+          "type": "mug",
+          "label": "Mug",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-mockup-mug-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png"
+        },
+        {
+          "type": "card",
+          "label": "Business Card",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-mockup-card-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png"
+        },
+        {
+          "type": "tshirt",
+          "label": "T-Shirt",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-mockup-tshirt-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png"
+        },
+        {
+          "type": "box",
+          "label": "Packaging",
+          "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-mockup-box-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png"
+        }
+      ]
+    },
+    "productMockups": [
+      {
+        "type": "mug",
+        "label": "Mug",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-mockup-mug-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png"
+      },
+      {
+        "type": "card",
+        "label": "Business Card",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-mockup-card-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png"
+      },
+      {
+        "type": "tshirt",
+        "label": "T-Shirt",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-mockup-tshirt-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png"
+      },
+      {
+        "type": "box",
+        "label": "Packaging",
+        "url": "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/4a673318-34c5-471b-8719-f7397c379c51/horizontal-mockup-box-4aa40983-4cb5-4998-8150-e8a578137711/logo-logo.png"
+      }
+    ],
+    "userModified": true,
+    "createdAt": "2026-10-27T16:47:26.811Z",
+    "lastUpdated": "2026-10-30T00:45:25.515Z",
+    "surfaceMode": "light",
+    "lightSurfaceUrl": "/airo-assets/uploads/logo-horizontal-92f98a4d.png",
+    "uploadSources": {
+      "/airo-assets/uploads/logo-horizontal-92f98a4d.png": "5eyfogqbt7_1793314661330_file_8uQyICNOId.PNG"
+    },
+    "uploadContentHash": "7ab81eed4b7f9e4fac8936cb7abdb63731d8fdac322aff0e00038f209fa3c71e",
+    "naturalOrientation": "horizontal"
+  },
+  "pages/home/hero": {
+    "orientations": "horizontal",
+    "graphicalStyles": "photography",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/logo-vertical-cc6e09bf.png",
+    "searchQuery": "kst kurdistan service team logo",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1255235421",
+      "https://img1.wsimg.com/isteam/getty/1255236023"
+    ],
+    "userModified": true,
+    "createdAt": "2026-10-27T16:47:28.712Z",
+    "lastUpdated": "2026-10-30T00:45:26.521Z",
+    "alternativeGettyIds": [
+      "1255235421",
+      "1255236023"
+    ],
+    "caption": "kst kurdistan service team logo"
+  },
+  "pages/home/about": {
+    "orientations": "horizontal",
+    "graphicalStyles": "photography",
+    "minimumSize": "large",
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1441688762",
+    "searchQuery": "engineering team construction project management professional",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/2169928754",
+      "https://img1.wsimg.com/isteam/getty/1487148679"
+    ],
+    "userModified": false,
+    "createdAt": "2026-10-27T16:47:30.187Z",
+    "lastUpdated": "2026-10-27T16:47:30.187Z",
+    "gettyId": "1441688762",
+    "alternativeGettyIds": [
+      "2169928754",
+      "1487148679"
+    ]
+  },
+  "logo/favicon": {
+    "mediaType": "logo",
+    "currentUrl": "/airo-assets/uploads/logo-favicon-3d9b5377.png",
+    "searchQuery": "",
+    "alternatives": [
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/77a9a9f1-25a1-4958-91c4-eb0c0de4f9ef/favicon-transparent-a6b9440b-08a0-47d6-9c5b-ed0c7af8e739/logo-logo.png",
+      "https://isteam.wsimg.com/genai-assistant/logoagent/customer/520aa5d3-6167-4e7a-ae07-0cb964f5643d/session/da8b9239-28f3-4b9b-a74b-cf1a8461d473/favicon-transparent-b5c1e11c-1f30-4c0c-9ed3-26b3c9336207/logo-logo.png"
+    ],
+    "userModified": true,
+    "createdAt": "2026-10-27T16:47:41.610Z",
+    "lastUpdated": "2026-10-30T00:45:25.515Z",
+    "surfaceMode": "light",
+    "lightSurfaceUrl": "/airo-assets/uploads/logo-favicon-3d9b5377.png",
+    "uploadSources": {
+      "/airo-assets/uploads/logo-favicon-3d9b5377.png": "5eyfogqbt7_1793314661330_file_8uQyICNOId.PNG"
+    },
+    "uploadContentHash": "7ab81eed4b7f9e4fac8936cb7abdb63731d8fdac322aff0e00038f209fa3c71e"
+  },
+  "uploads/hero-5eyfogqbt7-1793234397613-file-savmibcgme": {
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793234397613-file-savmibcgme-7658d37b.jpg",
+    "searchQuery": "kst kurdistan service team logo",
+    "alternatives": [],
+    "userModified": true,
+    "createdAt": "2026-10-29T00:40:52.831Z",
+    "lastUpdated": "2026-10-29T00:40:52.831Z",
+    "uploadSources": {
+      "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793234397613-file-savmibcgme-7658d37b.jpg": "5eyfogqbt7_1793234397613_file_savmibcGMe.jpg"
+    },
+    "uploadContentHash": "1b4dd9a7ca4a7a8d7eb9b1a698b32acd2bb1276439cd1c4bcf3208201d3a8661",
+    "caption": "kst kurdistan service team logo"
+  },
+  "logo/primary": {
+    "lightSurfaceUrl": "/airo-assets/uploads/logo-primary-a554184c.png",
+    "surfaceMode": "light",
+    "currentUrl": "/airo-assets/uploads/logo-primary-a554184c.png",
+    "userModified": true,
+    "mediaType": "logo",
+    "searchQuery": "",
+    "alternatives": [
+      "/airo-assets/uploads/logo-primary-d04ff6d8.png"
+    ],
+    "uploadSources": {
+      "/airo-assets/uploads/logo-primary-d04ff6d8.png": "5eyfogqbt7_1793313716722_file_8EORgxwpTx.jpg",
+      "/airo-assets/uploads/logo-primary-a554184c.png": "5eyfogqbt7_1793314661330_file_8uQyICNOId.PNG"
+    },
+    "uploadContentHash": "7ab81eed4b7f9e4fac8936cb7abdb63731d8fdac322aff0e00038f209fa3c71e",
+    "createdAt": "2026-10-29T22:47:25.409Z",
+    "lastUpdated": "2026-10-30T00:45:25.515Z",
+    "naturalOrientation": "square"
+  },
+  "logo/vertical": {
+    "lightSurfaceUrl": "/airo-assets/uploads/logo-vertical-cc6e09bf.png",
+    "surfaceMode": "light",
+    "currentUrl": "/airo-assets/uploads/logo-vertical-cc6e09bf.png",
+    "userModified": true,
+    "mediaType": "logo",
+    "searchQuery": "logo/vertical",
+    "alternatives": [
+      "/airo-assets/uploads/logo-vertical-f7e028ac.png"
+    ],
+    "uploadSources": {
+      "/airo-assets/uploads/logo-vertical-f7e028ac.png": "5eyfogqbt7_1793313716722_file_8EORgxwpTx.jpg",
+      "/airo-assets/uploads/logo-vertical-cc6e09bf.png": "5eyfogqbt7_1793314661330_file_8uQyICNOId.PNG"
+    },
+    "uploadContentHash": "7ab81eed4b7f9e4fac8936cb7abdb63731d8fdac322aff0e00038f209fa3c71e",
+    "createdAt": "2026-10-29T22:47:25.409Z",
+    "lastUpdated": "2026-10-30T00:45:25.989Z",
+    "naturalOrientation": "vertical",
+    "caption": "logo/vertical"
+  },
+  "imported/image-1793321129637": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1255235421",
+    "searchQuery": "abandoned building construction sunset desert",
+    "alternatives": [
+      "https://img1.wsimg.com/isteam/getty/1255235421"
+    ],
+    "userModified": false,
+    "displacedFrom": "pages/home/hero",
+    "createdAt": "2026-10-30T00:45:29.637Z",
+    "lastUpdated": "2026-10-30T00:45:29.637Z",
+    "caption": "abandoned building construction sunset desert"
+  },
+  "uploads/hero-5eyfogqbt7-1793321259577-file-r0mrw30rn8": {
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793321259577-file-r0mrw30rn8-69774776.jpg",
+    "searchQuery": "cityscape skyline golden sunset clouds",
+    "alternatives": [],
+    "userModified": true,
+    "createdAt": "2026-10-30T00:48:53.113Z",
+    "lastUpdated": "2026-10-30T00:49:45.813Z",
+    "uploadSources": {
+      "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793321259577-file-r0mrw30rn8-69774776.jpg": "5eyfogqbt7_1793321259577_file_R0MRW30RN8.jpg"
+    },
+    "uploadContentHash": "ce643d68f096d350f4c602d9d7be6af4b36dc8248184aa3e535aa070f6baaf6f",
+    "caption": "cityscape skyline golden sunset clouds"
+  },
+  "pages/home/hero-2": {
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793321259577-file-r0mrw30rn8-69774776.jpg",
+    "searchQuery": "kst kurdistan service team logo",
+    "alternatives": [
+      "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793321259577-file-r0mrw30rn8-69774776.jpg"
+    ],
+    "userModified": true,
+    "sourceRef": "src/pages/index.tsx:190",
+    "createdAt": "2026-10-30T00:49:46.189Z",
+    "lastUpdated": "2026-10-30T00:49:46.189Z"
+  }
+}

@@ -1,0 +1,49 @@
+{
+  "logo/horizontal": {
+    "mediaType": "logo",
+    "currentUrl": "/airo-assets/uploads/logo-horizontal-92f98a4d.png",
+    "lightSurfaceUrl": "/airo-assets/uploads/logo-horizontal-92f98a4d.png",
+    "naturalOrientation": "horizontal"
+  },
+  "pages/home/hero": {
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/logo-vertical-cc6e09bf.png"
+  },
+  "pages/home/about": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1441688762"
+  },
+  "logo/favicon": {
+    "mediaType": "logo",
+    "currentUrl": "/airo-assets/uploads/logo-favicon-3d9b5377.png",
+    "lightSurfaceUrl": "/airo-assets/uploads/logo-favicon-3d9b5377.png"
+  },
+  "uploads/hero-5eyfogqbt7-1793234397613-file-savmibcgme": {
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793234397613-file-savmibcgme-7658d37b.jpg"
+  },
+  "logo/primary": {
+    "mediaType": "logo",
+    "currentUrl": "/airo-assets/uploads/logo-primary-a554184c.png",
+    "lightSurfaceUrl": "/airo-assets/uploads/logo-primary-a554184c.png",
+    "naturalOrientation": "square"
+  },
+  "logo/vertical": {
+    "mediaType": "logo",
+    "currentUrl": "/airo-assets/uploads/logo-vertical-cc6e09bf.png",
+    "lightSurfaceUrl": "/airo-assets/uploads/logo-vertical-cc6e09bf.png",
+    "naturalOrientation": "vertical"
+  },
+  "imported/image-1793321129637": {
+    "mediaType": "image",
+    "currentUrl": "https://img1.wsimg.com/isteam/getty/1255235421"
+  },
+  "uploads/hero-5eyfogqbt7-1793321259577-file-r0mrw30rn8": {
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793321259577-file-r0mrw30rn8-69774776.jpg"
+  },
+  "pages/home/hero-2": {
+    "mediaType": "image",
+    "currentUrl": "/airo-assets/uploads/uploads-hero-5eyfogqbt7-1793321259577-file-r0mrw30rn8-69774776.jpg"
+  }
+}

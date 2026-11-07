@@ -1,0 +1,39 @@
+{
+  "overrides": {
+    "24e087": {
+      "marks": {
+        "bold": false,
+        "color": null,
+        "fontSize": "1.25rem",
+        "italic": false
+      },
+      "target": {
+        "contentKey": null,
+        "contentKeyTemplate": null,
+        "expressionHash": "sha256:51f2687c031a2f7689f873f33e7c07bd16ca7ca41301feb8bcbe2763309cfde3",
+        "file": "src/pages/index.tsx",
+        "sourceKind": "bound-expression",
+        "tagName": "p"
+      },
+      "updatedAt": "2026-10-30T00:12:04.903Z"
+    },
+    "bd814a": {
+      "marks": {
+        "bold": false,
+        "color": null,
+        "fontSize": "2.25rem",
+        "italic": false
+      },
+      "target": {
+        "contentKey": null,
+        "contentKeyTemplate": null,
+        "expressionHash": "sha256:0866ffc76e78399736cb5c815b808329be1cca6af14db2cb926a8fd8949b316e",
+        "file": "src/pages/index.tsx",
+        "sourceKind": "bound-expression",
+        "tagName": "span"
+      },
+      "updatedAt": "2026-10-30T00:27:52.089Z"
+    }
+  },
+  "version": 1
+}

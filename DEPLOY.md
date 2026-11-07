@@ -1,0 +1,109 @@
+# بڵاوکردنەوەی ماڵپەڕی KST لەسەر Cloudflare Pages
+
+ئەم ڕێنماییە بۆ بڵاوکردنەوەی ماڵپەڕەکەیە بە Cloudflare Pages، کە کۆدەکە لە GitHub (`issabarzani/KST`) دادەنرێت.
+هەموو هەنگاوەکان پێشتر لەسەر هەمان ژینگەی Cloudflare (Node 22.23.4، `npm ci`، wrangler) تاقیکراونەتەوە.
+
+## بۆچی Cloudflare و نەک GitHub Pages؟
+
+| | Cloudflare Pages | GitHub Pages |
+|---|---|---|
+| ماڵپەڕ، فۆرمی Formspree، سێ زمانەکە | کار دەکات | کار دەکات |
+| یاریدەدەری AI (وەڵامی زیرەک) | کار دەکات (`functions/api/chat.js`) | ناتوانێت، تەنیا وەڵامی ئامادە |
+| هێدەری ئاسایش (`_headers`) و پەڕەی 404 | هەیە | هێدەر نییە |
+| خێرایی و SSL | تۆڕی جیهانی Cloudflare، SSL بەخۆڕایی | باش |
+| نرخ | بەخۆڕایی | بەخۆڕایی |
+
+کۆدەکە هەر لە GitHub دەمێنێتەوە؛ Cloudflare لە هەر گۆڕانکارییەکدا خۆکار بڵاوی دەکاتەوە.
+
+---
+
+## ڕێگەی یەکەم (پێشنیارکراو): GitHub + Cloudflare
+
+### ١. کۆدەکە بخەرە ناو GitHub
+
+ڕیپۆی `issabarzani/KST` بەتاڵە. دوو ڕێگە هەیە:
+
+- **ئاسانترین:** ئەپی Claude بۆ GitHub دابمەزرێنە لەسەر ڕیپۆی KST (https://github.com/apps/claude/installations/select_target)، پاشان بە Claude بڵێ «push بکە». Claude خۆی هەموو فایلەکان دەنێرێت.
+- **بە دەستی خۆت:** GitHub Desktop دابەزێنە ← `File > Clone repository` ← `issabarzani/KST`. ناوەڕۆکی `KST_github_upload.zip` بخەرە ناو فۆڵدەرەکەی ← `Commit to main` ← `Push origin`.
+  تێبینی: بارکردنی وێب (`Add file > Upload files`) تەنیا ١٠٠ فایل وەردەگرێت و پرۆژەکە ١٩٨ فایلە، بۆیە GitHub Desktop باشترە.
+
+> فایلی `docs/PROPOSAL_SOURCE.md` (ناو و ژمارەی کەسیی بەڕێوەبەری پێشووی ZSC) بە ئەنقەست لە GitHub دانانرێت، چونکە ڕیپۆکە گشتییە (public). لە zip ـی پرۆژەکەدا پارێزراوە.
+
+### ٢. پرۆژەی Cloudflare Pages دروست بکە
+
+1. بچۆ https://dash.cloudflare.com و هەژمار دروست بکە (بەخۆڕایی).
+2. `Workers & Pages` ← `Create` ← تابی `Pages` ← `Connect to Git` (یان `Import an existing Git repository`).
+3. GitHub ببەستەوە و ڕیپۆی `issabarzani/KST` هەڵبژێرە.
+4. ڕێکخستنی Build بەم شێوەیە بنووسە:
+
+| خانە | نرخ |
+|---|---|
+| Production branch | `main` |
+| Framework preset | `None` |
+| Build command | `npm run build:static` |
+| Build output directory | `dist/client` |
+| Root directory | (بەتاڵ بەجێی بهێڵە) |
+
+5. `Save and Deploy`. نزیکەی ٢ خولەک دەخایەنێت. ماڵپەڕەکە لەسەر `kst-xxx.pages.dev` دەردەکەوێت.
+
+> `NODE_ENV` دامەنێ. وەشانی Node لە فایلی `.node-version` (22.23.4) دیاری کراوە.
+
+### ٣. یاریدەدەری AI چالاک بکە (ئارەزوومەندانە)
+
+1. لە https://console.anthropic.com کلیلی API دروست بکە. باشترە سنووری خەرجی مانگانە (`Spend limit`) دابنێیت.
+2. لە Cloudflare: پرۆژەکە ← `Settings` ← `Variables and Secrets` ← `Add`:
+   - Type: `Secret`
+   - Name: `ANTHROPIC_API_KEY`
+   - Value: کلیلەکەت
+3. `Deployments` ← دوایین بڵاوکردنەوە ← `Retry deployment`، بۆ ئەوەی کلیلەکە کاریگەری هەبێت.
+
+بەبێ کلیل، چاتەکە هەر کار دەکات بە وەڵامی ئامادەکراو لە زانیاری ماڵپەڕەکە.
+کۆدی Cloudflare تەنیا وەڵامی داواکاری ماڵپەڕەکەی خۆت دەداتەوە، بۆ ئەوەی کەسی تر کلیلەکەت بەکار نەهێنێت.
+
+### ٤. دۆمەینی `kurdistanserviceteam.com` ببەستەوە
+
+Cloudflare بۆ دۆمەینی سەرەکی (بەبێ www) داوا دەکات DNS ـەکە بگوازرێتەوە بۆ Cloudflare:
+
+1. `Add a domain` ← `kurdistanserviceteam.com` ← پلانی `Free`.
+2. **زۆر گرنگ، پێش گۆڕینی nameserver:** لە لیستی DNS دڵنیابە کە تۆمارەکانی ئیمەیڵ (`MX`، و `TXT`ـی SPF/DKIM) بۆ `info@kurdistanserviceteam.com` هەموویان کۆپی کراون. ئەگەر کەم بوو، لە کۆمپانیای دۆمەینەکەتەوە (registrar) کۆپیان بکە. ئەگەر نا، ئیمەیڵەکەت دەوەستێت.
+3. لە ماڵپەڕی کۆمپانیای دۆمەینەکەت، nameserver ـەکان بگۆڕە بۆ ئەو دوانەی Cloudflare پێتی دەدات.
+4. لە پرۆژەی Pages: `Custom domains` ← `Set up a custom domain` ← `kurdistanserviceteam.com`، پاشان هەمان کار بۆ `www.kurdistanserviceteam.com`.
+5. SSL خۆکار چالاک دەبێت (چەند خولەکێک تا چەند کاتژمێرێک).
+
+ئەگەر نەتەوێت DNS بگوازیتەوە: تەنیا `www.kurdistanserviceteam.com` دەتوانرێت بە تۆماری `CNAME` بۆ `kst-xxx.pages.dev` لە کۆمپانیای دۆمەینەکەتەوە ببەسترێتەوە (سەرەتا لە `Custom domains` زیادی بکە).
+
+### ٥. دوای بڵاوکردنەوە
+
+- **فۆرم:** نامەیەکی تاقیکاری لە ماڵپەڕە ڕاستەقینەکەوە بنێرە و ئیمەیڵەکەت بپشکنە. ئەگەر هەڵە هات، لە Formspree ← فۆرمەکە ← `Settings`، دڵنیابە `reCAPTCHA` کوژاوەتەوە (ماڵپەڕەکە بە AJAX دەنێرێت).
+- **ئامار:** لە Pages ← `Metrics` ← `Web Analytics` چالاکی بکە (بەبێ کووکیز، بەخۆڕایی).
+- **گووگڵ:** لە Google Search Console دۆمەینەکە زیاد بکە و `https://kurdistanserviceteam.com/sitemap.xml` بنێرە.
+
+### گۆڕانکاری لە داهاتوودا
+
+هەر گۆڕانکارییەک بخەیتە ناو `main` لە GitHub (بۆ نموونە زیادکردنی کڕیار لە `src/content/data/portfolio.json`)، Cloudflare خۆکار لە ماوەی ٢ خولەکدا بڵاوی دەکاتەوە. زانیاری یاریدەدەری AI ـیش لە هەمان کاتدا نوێ دەبێتەوە.
+
+---
+
+## ڕێگەی دووەم (خێرا، بەبێ GitHub): ڕاکێشان و دانان
+
+1. `Workers & Pages` ← `Create` ← `Pages` ← `Upload assets` (Direct Upload).
+2. ناوێک بنووسە (بۆ نموونە `kst`) ← `KST_cloudflare_upload.zip` ڕابکێشە ← `Deploy site`.
+
+هەموو شتێک کار دەکات، تەنیا یاریدەدەری AI بە وەڵامی ئامادە دەمێنێتەوە (Cloudflare لەم ڕێگەیەدا `functions` قبوڵ ناکات).
+تێبینی: پرۆژەی Direct Upload دواتر ناگۆڕدرێت بۆ GitHub؛ ئەگەر دواتر ڕێگەی یەکەمت ویست، پرۆژەیەکی نوێ دروست بکە و دۆمەینەکە بگوازەرەوە.
+
+---
+
+## بۆ پەرەپێدەر
+
+```bash
+npm ci
+npm run build:static            # → dist/client  (static HTML + assets)
+npx wrangler pages dev dist/client   # تاقیکردنەوە لەسەر کۆمپیوتەر لەگەڵ functions/
+SITE_URL=https://other-domain.com npm run build:static   # دۆمەینێکی تر
+```
+
+- `scripts/build-static.mjs`: بیلد، پەڕەی ئامادەکراو (`index.html`، `404.html`)، `robots.txt`، `sitemap.xml`، و `functions-lib/chat-config.js`.
+- `functions/api/chat.js`: یاریدەدەری AI لەسەر Cloudflare.
+- `public/_headers`: هێدەرەکانی ئاسایش.
+- `npm run build` و `dist/server.bundle.mjs` هێشتا بۆ هۆستینگی Node کار دەکەن.
