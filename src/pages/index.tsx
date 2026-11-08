@@ -1,4 +1,5 @@
 import Hero from '@/components/home/Hero';
+import FieldsStrip from '@/components/home/FieldsStrip';
 import About from '@/components/home/About';
 import Services from '@/components/home/Services';
 import Process from '@/components/home/Process';
@@ -60,6 +61,7 @@ export default function HomePage() {
       <PageSeo path="/" lang={lang} title={TITLE[lang]} description={DESC[lang]} jsonLd={business} />
       <main id="main" tabIndex={-1} className="outline-none">
         <Hero />
+        <FieldsStrip />
         <About />
         <Services />
         <Process />

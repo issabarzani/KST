@@ -4,6 +4,7 @@ import { processSection as P, processSteps } from '@/lib/process';
 import { useScrollSpy } from '@/lib/use-scroll-spy';
 import BlueprintPanel from '@/components/home/BlueprintPanel';
 import ProcessDrawing from '@/components/home/ProcessDrawing';
+import { stagger } from '@/lib/reveal';
 
 const num = (n: number) => String(n).padStart(2, '0');
 
@@ -18,8 +19,8 @@ export default function Process() {
     <section id="process" className="band bg-background">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
-          <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-[2.6rem]">{P.title[lang]}</h2>
-          <p className="max-w-prose text-base leading-loose text-muted-foreground lg:text-lg">{P.intro[lang]}</p>
+          <h2 className="reveal text-3xl font-extrabold sm:text-4xl lg:text-[2.6rem]">{P.title[lang]}</h2>
+          <p className="reveal max-w-prose text-base leading-loose text-muted-foreground lg:text-lg" style={stagger(1)}>{P.intro[lang]}</p>
         </div>
 
         <div className="mt-12 grid gap-8 lg:mt-14 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:gap-14">
@@ -46,7 +47,7 @@ export default function Process() {
               const on = i === active;
               const done = i < active;
               return (
-                <li key={s.title.en} data-key={String(i)} className="relative flex gap-5 py-6 sm:py-8">
+                <li key={s.title.en} data-key={String(i)} className="reveal side relative flex gap-5 py-6 sm:py-8">
                   <button
                     type="button"
                     onClick={() => setActive(i)}

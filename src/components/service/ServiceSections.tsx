@@ -8,6 +8,7 @@ import { getService, itemCount, layerOrder, servicePageText as T, services, type
 import { accentTokens } from '@/lib/color';
 import { proposalsSection as P, hvac } from '@/lib/proposals';
 import { useScrollSpy } from '@/lib/use-scroll-spy';
+import { stagger } from '@/lib/reveal';
 import BlueprintPanel from '@/components/home/BlueprintPanel';
 import { plans } from '@/components/drawings';
 import { audienceIcons, serviceIcons } from '@/components/service/icons';
@@ -33,13 +34,13 @@ export function Intro({ svc }: { svc: Service }) {
     <section className="band bg-background" aria-labelledby="intro-title">
       <div className="wrap grid items-start gap-10 lg:grid-cols-[1.25fr_0.75fr] lg:gap-16">
         <div>
-          <h2 id="intro-title" className="svc-ink text-sm font-extrabold uppercase tracking-[0.12em]">
+          <h2 id="intro-title" className="reveal svc-ink text-sm font-extrabold uppercase tracking-[0.12em]">
             {lang === 'ku' ? 'پێشەکی' : lang === 'ar' ? 'مقدمة' : 'Overview'}
           </h2>
-          <p className="mt-5 max-w-3xl text-xl font-semibold leading-loose text-foreground sm:text-2xl sm:leading-loose">{svc.intro[lang]}</p>
-          <p className="mt-5 max-w-3xl text-base leading-loose text-muted-foreground">{svc.summary[lang]}</p>
+          <p className="reveal mt-5 max-w-3xl text-xl font-semibold leading-loose text-foreground sm:text-2xl sm:leading-loose" style={stagger(1)}>{svc.intro[lang]}</p>
+          <p className="reveal mt-5 max-w-3xl text-base leading-loose text-muted-foreground" style={stagger(2)}>{svc.summary[lang]}</p>
         </div>
-        <dl className="grid grid-cols-2 overflow-hidden rounded-md border border-border bg-card shadow-sm">
+        <dl className="reveal zoom grid grid-cols-2 overflow-hidden rounded-md border border-border bg-card shadow-sm" style={stagger(2)}>
           {cells.map(([k, v], i) => (
             <div
               key={k}
@@ -78,8 +79,8 @@ export function Groups({ svc }: { svc: Service }) {
     <section id="what" className="band bg-secondary" aria-labelledby="what-title">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
-          <h2 id="what-title" className="text-3xl font-extrabold sm:text-4xl lg:text-[2.6rem]">{T.whatWeDo[lang]}</h2>
-          <p className="max-w-prose text-base leading-loose text-muted-foreground lg:text-lg">{T.whatWeDoHint[lang]}</p>
+          <h2 id="what-title" className="reveal text-3xl font-extrabold sm:text-4xl lg:text-[2.6rem]">{T.whatWeDo[lang]}</h2>
+          <p className="reveal max-w-prose text-base leading-loose text-muted-foreground lg:text-lg" style={stagger(1)}>{T.whatWeDoHint[lang]}</p>
         </div>
 
         <div className="mt-12 grid gap-8 lg:mt-14 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-14">
@@ -107,13 +108,13 @@ export function Groups({ svc }: { svc: Service }) {
           <div ref={listRef} className="space-y-12 lg:order-1">
             {svc.groups.map((g) => (
               <div key={g.id}>
-                <h3 className="flex items-center gap-3 text-xl font-extrabold leading-snug sm:text-2xl">
+                <h3 className="reveal side flex items-center gap-3 text-xl font-extrabold leading-snug sm:text-2xl">
                   <span className="h-6 w-1.5 shrink-0 rounded-full" style={{ background: svc.accent }} aria-hidden="true" />
                   {g.title[lang]}
                 </h3>
-                {g.intro && <p className="mt-3 max-w-prose leading-relaxed text-muted-foreground">{g.intro[lang]}</p>}
+                {g.intro && <p className="reveal mt-3 max-w-prose leading-relaxed text-muted-foreground">{g.intro[lang]}</p>}
                 <ol className="mt-5 space-y-3">
-                  {g.items.map((it) => {
+                  {g.items.map((it, j) => {
                     index += 1;
                     const i = index;
                     const on = i === active;
@@ -122,10 +123,10 @@ export function Groups({ svc }: { svc: Service }) {
                         key={i}
                         data-key={String(i)}
                         onMouseEnter={() => setActive(i)}
-                        className={`relative flex gap-4 rounded-md border bg-card p-4 transition-[border-color,box-shadow] duration-300 sm:p-5 ${
+                        className={`reveal relative flex gap-4 rounded-md border bg-card p-4 transition-[border-color,box-shadow] duration-300 sm:p-5 ${
                           on ? 'shadow-md' : 'border-border'
                         }`}
-                        style={on ? { borderColor: svc.accent, boxShadow: `0 0 0 1px ${svc.accent}` } : undefined}
+                        style={{ ...stagger(j, 0.05, 3), ...(on ? { borderColor: svc.accent, boxShadow: `0 0 0 1px ${svc.accent}` } : {}) }}
                       >
                         <span
                           className={`ltr-isolate flex h-9 w-9 shrink-0 items-center justify-center rounded text-xs font-extrabold transition-colors ${on ? '' : 'bg-muted text-muted-foreground'}`}
@@ -164,7 +165,7 @@ export function OrAirBlock() {
   return (
     <section className="ink-scope bg-background py-16 sm:py-20" aria-labelledby="or-air-title" style={{ ['--ink-l' as string]: t.inkLight, ['--ink-d' as string]: t.inkDark }}>
       <div className="wrap">
-        <div className="grid gap-8 rounded-md border border-border bg-card p-6 shadow-sm sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14" style={{ borderInlineStartWidth: 6, borderInlineStartColor: or.accent }}>
+        <div className="reveal grid gap-8 rounded-md border border-border bg-card p-6 shadow-sm sm:p-10 lg:grid-cols-[0.9fr_1.1fr] lg:gap-14" style={{ borderInlineStartWidth: 6, borderInlineStartColor: or.accent }}>
           <div>
             <h2 id="or-air-title" className="text-2xl font-extrabold sm:text-3xl">{T.orBlock.title[lang]}</h2>
             <p className="mt-4 leading-loose text-muted-foreground">{T.orBlock.text[lang]}</p>
@@ -174,8 +175,8 @@ export function OrAirBlock() {
             </Link>
           </div>
           <ul className="grid gap-3 sm:grid-cols-2">
-            {T.orBlock.items.map((x) => (
-              <li key={x.en} className="flex gap-3 rounded-md bg-muted/60 p-4 leading-relaxed">
+            {T.orBlock.items.map((x, i) => (
+              <li key={x.en} className="reveal zoom flex gap-3 rounded-md bg-muted/60 p-4 leading-relaxed" style={stagger(i + 2)}>
                 <ShieldCheck size={20} className="mt-0.5 shrink-0" style={{ color: 'var(--ink)' }} aria-hidden="true" />
                 <span>{x[lang]}</span>
               </li>
@@ -194,7 +195,7 @@ export function HvacProposal({ svc }: { svc: Service }) {
   return (
     <section className="band bg-[hsl(var(--night))] text-white" aria-labelledby="proposal-title">
       <div className="wrap">
-        <div className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
+        <div className="reveal grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
           <div>
             <p className="text-sm font-bold uppercase tracking-[0.12em]" style={{ color: t.onNight }}>{T.proposal.title[lang]}</p>
             <h2 id="proposal-title" className="mt-3 text-3xl font-extrabold text-white sm:text-4xl">{hvac.pitch[lang]}</h2>
@@ -202,10 +203,10 @@ export function HvacProposal({ svc }: { svc: Service }) {
           <p className="max-w-prose leading-loose text-white/70 lg:text-lg">{hvac.summary[lang]}</p>
         </div>
 
-        <h3 className="mt-14 text-xl font-extrabold text-white">{P.scope[lang]}</h3>
+        <h3 className="reveal mt-14 text-xl font-extrabold text-white">{P.scope[lang]}</h3>
         <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {hvac.scope.map((g, i) => (
-            <section key={g.title.en} className="rounded-md border border-white/15 bg-white/[0.04] p-6">
+            <section key={g.title.en} className="reveal rounded-md border border-white/15 bg-white/[0.04] p-6" style={stagger(i)}>
               <p className="ltr-isolate text-sm font-extrabold" style={{ ...latin, color: t.onNight }}>{num(i + 1)}</p>
               <h4 className="mt-2 text-lg font-extrabold text-white">{g.title[lang]}</h4>
               <ul className="mt-4 space-y-2 text-[0.95rem] text-white/75">
@@ -220,10 +221,10 @@ export function HvacProposal({ svc }: { svc: Service }) {
           ))}
         </div>
 
-        <h3 className="mt-14 text-xl font-extrabold text-white">{P.why[lang]}</h3>
+        <h3 className="reveal mt-14 text-xl font-extrabold text-white">{P.why[lang]}</h3>
         <dl className="mt-6 grid gap-x-10 gap-y-6 md:grid-cols-2 lg:grid-cols-3">
-          {hvac.why.map((w) => (
-            <div key={w.title.en} className="border-s-2 ps-4" style={{ borderColor: svc.accent }}>
+          {hvac.why.map((w, i) => (
+            <div key={w.title.en} className="reveal side border-s-2 ps-4" style={{ ...stagger(i), borderColor: svc.accent }}>
               <dt className="font-bold text-white">{w.title[lang]}</dt>
               <dd className="mt-1 text-[0.95rem] leading-relaxed text-white/70">{w.text[lang]}</dd>
             </div>
@@ -231,7 +232,7 @@ export function HvacProposal({ svc }: { svc: Service }) {
         </dl>
 
         <div className="mt-14 grid gap-5 md:grid-cols-2">
-          <section className="rounded-md border border-white/15 bg-white/[0.04] p-6">
+          <section className="reveal rounded-md border border-white/15 bg-white/[0.04] p-6">
             <h3 className="flex items-center gap-2 text-lg font-extrabold text-white">
               <ShieldCheck size={20} style={{ color: t.onNight }} aria-hidden="true" />
               {P.quality[lang]}
@@ -246,7 +247,7 @@ export function HvacProposal({ svc }: { svc: Service }) {
             </ul>
             <p className="mt-4 border-t border-white/10 pt-4 text-sm text-white/65">{hvac.safety[lang]}</p>
           </section>
-          <section className="rounded-md p-6" style={{ background: t.solid, color: t.onAccent }}>
+          <section className="reveal zoom rounded-md p-6" style={{ ...stagger(1), background: t.solid, color: t.onAccent }}>
             <h3 className="text-lg font-extrabold">{P.request[lang]}</h3>
             <p className="mt-3 leading-relaxed">{hvac.commitment[lang]}</p>
             <Link to={quoteHref(svc.slug, lang)} className="btn mt-6 bg-[hsl(var(--night))] text-white hover:opacity-90">
@@ -281,14 +282,14 @@ export function SolarCompare({ svc }: { svc: Service }) {
     <section className="ink-scope band bg-background" aria-labelledby="solar-title" style={{ ['--ink-l' as string]: t.inkLight, ['--ink-d' as string]: t.inkDark }}>
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
-          <h2 id="solar-title" className="text-3xl font-extrabold sm:text-4xl">{S.title[lang]}</h2>
-          <p className="max-w-prose leading-loose text-muted-foreground lg:text-lg">{S.intro[lang]}</p>
+          <h2 id="solar-title" className="reveal text-3xl font-extrabold sm:text-4xl">{S.title[lang]}</h2>
+          <p className="reveal max-w-prose leading-loose text-muted-foreground lg:text-lg" style={stagger(1)}>{S.intro[lang]}</p>
         </div>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {S.types.map((x, i) => {
             const item = svc.groups.find((g) => g.id === 'solar')!.items[i];
             return (
-              <article key={x.id} className="flex flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm">
+              <article key={x.id} className="reveal flex flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm" style={stagger(i, 0.12)}>
                 <div className="h-1.5" style={{ background: i === 2 ? `linear-gradient(90deg, ${svc.accent}, ${green})` : i === 0 ? svc.accent : green }} />
                 <div className="flex flex-1 flex-col p-6">
                   <h3 className="ltr-isolate text-2xl font-extrabold" style={latin}>{x.id}</h3>
@@ -334,8 +335,8 @@ export function Timeline({ svc, steps }: { svc: Service; steps: Step[] }) {
     <section className="band bg-background" aria-labelledby="process-title">
       <div className="wrap grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
-          <h2 id="process-title" className="text-3xl font-extrabold sm:text-4xl">{T.process[lang]}</h2>
-          <p className="mt-5 max-w-prose leading-loose text-muted-foreground lg:text-lg">{T.processIntro[lang]}</p>
+          <h2 id="process-title" className="reveal text-3xl font-extrabold sm:text-4xl">{T.process[lang]}</h2>
+          <p className="reveal mt-5 max-w-prose leading-loose text-muted-foreground lg:text-lg" style={stagger(1)}>{T.processIntro[lang]}</p>
           <p className="ltr-isolate mt-8 hidden text-6xl font-extrabold lg:block" style={latin} aria-hidden="true">
             <span className="svc-ink">{num(active + 1)}</span>
             <span className="text-2xl text-muted-foreground">/{num(steps.length)}</span>
@@ -353,7 +354,7 @@ export function Timeline({ svc, steps }: { svc: Service; steps: Step[] }) {
             const on = i === active;
             const done = i < active;
             return (
-              <li key={s.title.en} data-key={String(i)} className="relative flex gap-5 py-5 sm:py-7">
+              <li key={s.title.en} data-key={String(i)} className="reveal side relative flex gap-5 py-5 sm:py-7">
                 <span
                   className={`ltr-isolate relative z-[1] flex h-10 w-10 shrink-0 items-center justify-center rounded-full border-2 text-sm font-extrabold transition-colors duration-300 ${
                     on || done ? '' : 'border-border bg-background text-muted-foreground'
@@ -386,12 +387,12 @@ export function Audience({ svc }: { svc: Service }) {
   return (
     <section className="band bg-secondary" aria-labelledby="audience-title">
       <div className="wrap">
-        <h2 id="audience-title" className="text-3xl font-extrabold sm:text-4xl">{T.audience[lang]}</h2>
+        <h2 id="audience-title" className="reveal text-3xl font-extrabold sm:text-4xl">{T.audience[lang]}</h2>
         <ul className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7">
-          {svc.audience.map((a) => {
+          {svc.audience.map((a, i) => {
             const Icon = audienceIcons[a.icon];
             return (
-              <li key={a.label.en} className="flex flex-col items-start gap-4 rounded-md border border-border bg-card p-5">
+              <li key={a.label.en} className="reveal zoom flex flex-col items-start gap-4 rounded-md border border-border bg-card p-5" style={stagger(i)}>
                 <span className="flex h-11 w-11 items-center justify-center rounded" style={{ background: t.solid, color: t.onAccent }}>
                   <Icon size={21} strokeWidth={1.8} aria-hidden="true" />
                 </span>
@@ -414,7 +415,7 @@ export function FieldClients({ svc }: { svc: Service }) {
   return (
     <section className="band bg-background" aria-labelledby="clients-title">
       <div className="wrap">
-        <div className="flex flex-wrap items-end justify-between gap-6">
+        <div className="reveal flex flex-wrap items-end justify-between gap-6">
           <div>
             <h2 id="clients-title" className="text-3xl font-extrabold sm:text-4xl">{T.clients[lang]}</h2>
             <p className="mt-4 max-w-prose leading-loose text-muted-foreground">{T.clientsIntro[lang]}</p>
@@ -425,8 +426,8 @@ export function FieldClients({ svc }: { svc: Service }) {
           </Link>
         </div>
         <ul className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {list.map((p) => (
-            <li key={p.id} className="rounded-md border border-border bg-card p-5">
+          {list.map((p, i) => (
+            <li key={p.id} className="reveal rounded-md border border-border bg-card p-5" style={stagger(i % 6)}>
               <p className="text-lg font-extrabold leading-snug">{lang === 'ku' ? p.nameKu : lang === 'ar' ? p.nameAr : p.nameEn}</p>
               <p className="mt-1.5 flex items-center gap-1.5 text-sm text-muted-foreground">
                 <MapPin size={14} aria-hidden="true" />
@@ -460,10 +461,10 @@ export function Faq({ svc }: { svc: Service }) {
   return (
     <section className="band bg-secondary" aria-labelledby="faq-title">
       <div className="wrap grid gap-10 lg:grid-cols-[0.8fr_1.2fr] lg:gap-20">
-        <h2 id="faq-title" className="text-3xl font-extrabold sm:text-4xl">{T.faq[lang]}</h2>
+        <h2 id="faq-title" className="reveal text-3xl font-extrabold sm:text-4xl">{T.faq[lang]}</h2>
         <div className="space-y-3">
           {svc.faqs.map((f, i) => (
-            <details key={f.q.en} className="group rounded-md border border-border bg-card open:shadow-sm" open={i === 0}>
+            <details key={f.q.en} className="reveal group rounded-md border border-border bg-card open:shadow-sm" open={i === 0} style={stagger(i, 0.1)}>
               <summary className="flex cursor-pointer list-none items-center justify-between gap-4 p-5 text-start text-lg font-extrabold leading-snug [&::-webkit-details-marker]:hidden">
                 {f.q[lang]}
                 <ChevronDown size={20} className="shrink-0 text-muted-foreground transition-transform group-open:rotate-180" aria-hidden="true" />
@@ -483,14 +484,14 @@ export function Related({ svc }: { svc: Service }) {
   return (
     <section className="band bg-background" aria-labelledby="related-title">
       <div className="wrap">
-        <h2 id="related-title" className="text-3xl font-extrabold sm:text-4xl">{T.related[lang]}</h2>
+        <h2 id="related-title" className="reveal text-3xl font-extrabold sm:text-4xl">{T.related[lang]}</h2>
         <ul className={`mt-10 grid gap-4 ${svc.related.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
-          {svc.related.map((slug) => {
+          {svc.related.map((slug, i) => {
             const r = getService(slug)!;
             const Icon = serviceIcons[slug];
             const t = accentTokens(r.accent);
             return (
-              <li key={slug}>
+              <li key={slug} className="reveal" style={stagger(i, 0.12)}>
                 <Link to={servicePath(slug, lang)} className="group flex h-full flex-col rounded-md border border-border bg-card p-6 transition-colors hover:border-foreground/30">
                   <span className="flex h-11 w-11 items-center justify-center rounded" style={{ background: t.solid, color: t.onAccent }}>
                     <Icon size={21} strokeWidth={1.8} aria-hidden="true" />
@@ -524,11 +525,11 @@ export function FinalCta({ svc }: { svc: Service }) {
         aria-hidden="true"
       />
       <div className="wrap relative flex flex-col items-start gap-8 lg:flex-row lg:items-end lg:justify-between">
-        <div className="max-w-2xl">
+        <div className="reveal max-w-2xl">
           <h2 id="cta-title" className="text-3xl font-extrabold text-white sm:text-5xl">{T.ctaTitle[lang]}</h2>
           <p className="mt-5 text-lg leading-loose text-white/75">{T.ctaText[lang]}</p>
         </div>
-        <Link to={quoteHref(svc.slug, lang)} className="btn shrink-0 !px-8 text-base hover:opacity-90" style={{ background: t.solid, color: t.onAccent }}>
+        <Link to={quoteHref(svc.slug, lang)} className="reveal zoom btn shrink-0 !px-8 text-base hover:opacity-90" style={{ ...stagger(2), background: t.solid, color: t.onAccent }}>
           {T.ctaButton[lang]}
           <ArrowRight size={18} className="rtl:-scale-x-100" aria-hidden="true" />
         </Link>

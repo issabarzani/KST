@@ -9,6 +9,7 @@ import { useScrollSpy } from '@/lib/use-scroll-spy';
 import BuildingSection from '@/components/home/BuildingSection';
 import BlueprintPanel from '@/components/home/BlueprintPanel';
 import { serviceIcons } from '@/components/service/icons';
+import { stagger } from '@/lib/reveal';
 
 const num = (n: number) => String(n).padStart(2, '0');
 
@@ -29,8 +30,8 @@ export default function Services() {
     <section id="services" className="band bg-secondary">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
-          <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-[2.6rem]">{S.title[lang]}</h2>
-          <p className="max-w-prose text-base leading-loose text-muted-foreground lg:text-lg">{S.intro[lang]}</p>
+          <h2 className="reveal text-3xl font-extrabold sm:text-4xl lg:text-[2.6rem]">{S.title[lang]}</h2>
+          <p className="reveal max-w-prose text-base leading-loose text-muted-foreground lg:text-lg" style={stagger(1)}>{S.intro[lang]}</p>
         </div>
 
         <div className="mt-12 grid gap-8 lg:mt-14 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14">
@@ -64,7 +65,7 @@ export default function Services() {
                 const on = s.slug === active;
                 const t = accentTokens(s.accent);
                 return (
-                  <li key={s.slug} data-key={s.slug}>
+                  <li key={s.slug} data-key={s.slug} className="reveal" style={stagger(i % 2, 0.08)}>
                     <Link
                       to={servicePath(s.slug, lang)}
                       onMouseEnter={() => setActive(s.slug)}

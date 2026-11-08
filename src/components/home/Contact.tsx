@@ -8,6 +8,7 @@ import { getService, isServiceSlug, services } from '@/lib/services';
 import { CONTACT_FORM_ENDPOINT } from '@/config/forms';
 import { waLink, whatsappNumbers } from '@/lib/contact';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
+import { stagger } from '@/lib/reveal';
 
 type Field = 'name' | 'company' | 'phone' | 'email' | 'service' | 'message';
 type Checked = 'name' | 'phone' | 'email' | 'service' | 'message';
@@ -152,12 +153,12 @@ export default function Contact() {
     <section id="contact" className="band bg-secondary">
       <div className="wrap">
         <div className="max-w-2xl">
-          <h2 className="text-3xl font-extrabold sm:text-4xl lg:text-[2.6rem]">{c.title[lang]}</h2>
-          <p className="mt-5 text-lg leading-loose text-muted-foreground">{c.lead[lang]}</p>
+          <h2 className="reveal text-3xl font-extrabold sm:text-4xl lg:text-[2.6rem]">{c.title[lang]}</h2>
+          <p className="reveal mt-5 text-lg leading-loose text-muted-foreground" style={stagger(1)}>{c.lead[lang]}</p>
         </div>
 
         <div className="mt-12 grid gap-10 lg:grid-cols-[1.15fr_0.85fr] lg:gap-16">
-          <div className="rounded-md border border-border bg-card p-6 shadow-sm sm:p-9">
+          <div className="reveal rounded-md border border-border bg-card p-6 shadow-sm sm:p-9" style={stagger(1)}>
             {done ? (
               <div ref={doneRef} tabIndex={-1} role="status" className="py-10 text-center outline-none">
                 <CheckCircle2 size={52} className="mx-auto text-success" />
@@ -274,7 +275,7 @@ export default function Contact() {
             )}
           </div>
 
-          <div className="space-y-8">
+          <div className="reveal side space-y-8" style={stagger(2)}>
             <div>
               <p className="text-[1.02rem] leading-relaxed text-foreground/80">{c.whatsappLead[lang]}</p>
               <ul className="mt-5 grid gap-3">

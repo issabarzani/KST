@@ -4,6 +4,7 @@ import { ArrowRight, Check, ShieldCheck } from 'lucide-react';
 import { useLang, servicePath } from '@/lib/lang-context';
 import { getService } from '@/lib/services';
 import { proposalsSection as P, hvac, healthcare, type ProposalId } from '@/lib/proposals';
+import { stagger } from '@/lib/reveal';
 
 const SERVICE_FOR: Record<ProposalId, string> = { hvac: 'hvac', healthcare: 'medical-equipment' };
 // "More" links from each proposal to the full field pages
@@ -14,7 +15,7 @@ function requestProposal(id: ProposalId, message: string) {
   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
 }
 
-const card = 'rounded-md border border-white/15 bg-white/[0.04] p-6';
+const card = 'reveal rounded-md border border-white/15 bg-white/[0.04] p-6';
 
 function Hvac() {
   const { lang } = useLang();
@@ -39,8 +40,8 @@ function Hvac() {
       <div>
         <h3 className="text-xl font-extrabold text-white">{P.why[lang]}</h3>
         <dl className="mt-6 grid gap-x-10 gap-y-6 md:grid-cols-2">
-          {hvac.why.map((w) => (
-            <div key={w.title.en} className="border-s-2 border-[hsl(var(--gold))] ps-4">
+          {hvac.why.map((w, i) => (
+            <div key={w.title.en} className="reveal side border-s-2 border-[hsl(var(--gold))] ps-4" style={stagger(i)}>
               <dt className="font-bold text-white">{w.title[lang]}</dt>
               <dd className="mt-1 text-[0.95rem] leading-relaxed text-white/70">{w.text[lang]}</dd>
             </div>
@@ -59,7 +60,7 @@ function Hvac() {
           </ul>
           <p className="mt-4 border-t border-white/10 pt-4 text-sm text-white/65">{hvac.safety[lang]}</p>
         </section>
-        <section className="rounded-md bg-[hsl(var(--gold))] p-6 text-[hsl(var(--night))]">
+        <section className="reveal zoom rounded-md bg-[hsl(var(--gold))] p-6 text-[hsl(var(--night))]">
           <h3 className="text-lg font-extrabold">{hvac.pitch[lang]}</h3>
           <p className="mt-3 leading-relaxed">{hvac.commitment[lang]}</p>
         </section>
@@ -115,7 +116,8 @@ function Healthcare() {
           {healthcare.plans.map((p) => (
             <section
               key={p.id}
-              className={`rounded-md p-6 ${p.recommended ? 'bg-[hsl(var(--gold))] text-[hsl(var(--night))]' : 'border border-white/15 bg-white/[0.04] text-white'}`}
+              style={stagger(p.id.charCodeAt(0) - 65)}
+              className={`reveal rounded-md p-6 ${p.recommended ? 'bg-[hsl(var(--gold))] text-[hsl(var(--night))]' : 'border border-white/15 bg-white/[0.04] text-white'}`}
             >
               <div className="flex items-center justify-between gap-3">
                 <h4 className="text-lg font-extrabold">{p.title[lang]}</h4>
@@ -161,8 +163,8 @@ export default function Proposals() {
     <section id="proposals" className="band bg-[hsl(var(--night))] text-white">
       <div className="wrap">
         <div className="grid gap-6 lg:grid-cols-2 lg:items-end lg:gap-20">
-          <h2 className="text-3xl font-extrabold text-white sm:text-4xl lg:text-[2.6rem]">{P.title[lang]}</h2>
-          <p className="max-w-prose leading-loose text-white/70 lg:text-lg">{P.intro[lang]}</p>
+          <h2 className="reveal text-3xl font-extrabold text-white sm:text-4xl lg:text-[2.6rem]">{P.title[lang]}</h2>
+          <p className="reveal max-w-prose leading-loose text-white/70 lg:text-lg" style={stagger(1)}>{P.intro[lang]}</p>
         </div>
 
         <div role="tablist" aria-label={P.title[lang]} className="mt-10 flex flex-wrap gap-2">

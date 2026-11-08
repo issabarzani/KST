@@ -1,6 +1,9 @@
+import { useRef } from 'react';
 import { home } from 'virtual:content';
 import { useLang } from '@/lib/lang-context';
 import { ui } from '@/lib/i18n';
+import { useScrollProgress } from '@/lib/use-scroll-progress';
+import CountUp from '@/components/CountUp';
 
 const go = (id: string) => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
 
@@ -11,7 +14,8 @@ function Strands() {
       viewBox="0 0 600 700"
       preserveAspectRatio="xMidYMid slice"
       aria-hidden="true"
-      className="pointer-events-none absolute inset-y-0 end-0 h-full w-[70%] max-w-[780px] opacity-60 [html[dir=rtl]_&]:-scale-x-100"
+      style={{ translate: '0 calc(var(--p, 0) * -70px)' }}
+      className="parallax pointer-events-none absolute inset-y-0 end-0 h-full w-[70%] max-w-[780px] opacity-60 [html[dir=rtl]_&]:-scale-x-100"
       fill="none"
       strokeLinecap="round"
     >
@@ -24,6 +28,8 @@ function Strands() {
 
 export default function Hero() {
   const { lang } = useLang();
+  const ref = useRef<HTMLElement>(null);
+  useScrollProgress(ref); // the photo and the strands drift as the page scrolls
   const title =
     lang === 'ku'
       ? `${home.hero.headlineKu1} ${home.hero.headlineKu2}`
@@ -32,7 +38,7 @@ export default function Hero() {
         : 'Kurdistan Service Team';
 
   return (
-    <section id="home" className="relative overflow-hidden bg-[hsl(var(--night))] pt-[72px] text-white">
+    <section id="home" ref={ref} className="relative overflow-hidden bg-[hsl(var(--night))] pt-[72px] text-white">
       <Strands />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.07]"
@@ -71,7 +77,10 @@ export default function Hero() {
           </div>
         </div>
 
-        <figure className="rise relative mx-auto w-full max-w-md lg:max-w-none" style={{ animationDelay: '0.35s' }}>
+        <figure
+          className="parallax rise relative mx-auto w-full max-w-md lg:max-w-none"
+          style={{ animationDelay: '0.35s', translate: '0 calc(var(--p, 0) * 56px)', scale: 'calc(1 - var(--p, 0) * 0.05)' }}
+        >
           <div className="relative aspect-[4/5] overflow-hidden rounded-sm ring-1 ring-white/15">
             <img
               src="/assets/erbil-skyline.webp"
@@ -95,7 +104,7 @@ export default function Hero() {
           {ui.stats.map((s) => (
             <div key={s.value} className="px-3 py-6 text-center sm:px-8 sm:py-8 sm:text-start">
               <dt className="order-2 text-xs text-white/65 sm:text-sm">{s.label[lang]}</dt>
-              <dd className="ltr-isolate mt-1 text-3xl font-extrabold text-[hsl(var(--gold))] sm:text-5xl" style={{ fontFamily: 'var(--font-latin)' }}>{s.value}</dd>
+              <dd className="ltr-isolate mt-1 text-3xl font-extrabold text-[hsl(var(--gold))] sm:text-5xl" style={{ fontFamily: 'var(--font-latin)' }}><CountUp value={s.value} /></dd>
             </div>
           ))}
         </dl>

@@ -17,7 +17,7 @@ export default function BlueprintPanel({
 }) {
   return (
     <div className={`sticky top-[76px] z-10 self-start lg:top-24 ${className}`}>
-      <figure className="overflow-hidden rounded-md bg-[hsl(var(--night))] text-white shadow-xl ring-1 ring-black/5 dark:ring-white/10">
+      <figure className="reveal zoom overflow-hidden rounded-md bg-[hsl(var(--night))] text-white shadow-xl ring-1 ring-black/5 dark:ring-white/10">
         <div
           className="relative px-3 pb-1 pt-4 sm:px-6 sm:pt-6"
           style={{

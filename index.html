@@ -18,6 +18,31 @@
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      /* Scroll-in motion: anything with class "reveal" rises into view the first time it reaches the screen.
+         Runs before the app loads so it also works on the prerendered pages; without JavaScript nothing is hidden. */
+      (function () {
+        var d = document.documentElement;
+        if (!('IntersectionObserver' in window) || !('MutationObserver' in window)) return;
+        d.classList.add('js');
+        var io = new IntersectionObserver(function (entries) {
+          entries.forEach(function (e) {
+            if (e.isIntersecting) { e.target.setAttribute('data-in', ''); io.unobserve(e.target); }
+          });
+        }, { rootMargin: '0px 0px -6% 0px', threshold: 0.06 });
+        var watch = function (root) {
+          if (root.matches && root.matches('.reveal:not([data-in])')) io.observe(root);
+          if (root.querySelectorAll) root.querySelectorAll('.reveal:not([data-in])').forEach(function (el) { io.observe(el); });
+        };
+        var start = function () {
+          watch(document);
+          new MutationObserver(function (list) {
+            list.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.nodeType === 1) watch(n); }); });
+          }).observe(document.body, { childList: true, subtree: true });
+        };
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
+      })();
+    </script>
     <!--app-head-->
     <script defer src="/airo-video-slots.js"></script>
     <script defer src="/airo-logo-orientation.js"></script>

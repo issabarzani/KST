@@ -20,9 +20,9 @@ export const ui = {
     ar: 'حلول هندسية متكاملة لمشاريعك',
   } as L10n,
   heroNote: {
-    ku: 'بیناسازی، ساردکەرەوە، کارەبا، ئامێری پزیشکی و سیستەمی زیرەک — لە یەک تیمدا.',
-    en: 'Construction, HVAC, electrical, medical rooms and smart systems, delivered by one team in Erbil.',
-    ar: 'البناء والتكييف والكهرباء والأنظمة الطبية والذكية، بفريق واحد في أربيل.',
+    ku: 'ساردکەرەوە، بیناسازی، کارەبا و سۆلار، هۆڵی نەشتەرگەری، ئامێری پزیشکی، ئایتی، سیستەمی بەڕێوەبردن و ستاف: هەشت بوار، یەک تیم.',
+    en: 'HVAC, construction, electrical and solar, operating rooms, medical equipment, IT, management and staffing: eight fields, one team in Erbil.',
+    ar: 'التكييف والبناء والكهرباء والطاقة الشمسية وغرف العمليات والأجهزة الطبية وتقنية المعلومات والأنظمة الإدارية والعمالة: ثمانية مجالات وفريق واحد.',
   } as L10n,
   theme: { ku: 'گۆڕینی دیمەن', en: 'Switch theme', ar: 'تبديل المظهر' } as L10n,
   menu: { ku: 'مینیو', en: 'Menu', ar: 'القائمة' } as L10n,
@@ -94,12 +94,11 @@ export const clientsSection = {
   empty: { ku: 'هیچ کڕیارێک نەدۆزرایەوە.', en: 'No clients match. Clear the search or choose another filter.', ar: 'لا يوجد عملاء مطابقون. امسح البحث أو اختر تصنيفاً آخر.' } as L10n,
   count: { ku: 'کڕیار', en: 'clients', ar: 'عميل' } as L10n,
   intro: {
-    ku: 'نەخۆشخانە، سەنتەری جوانکاری، هۆتێل، چێشتخانە و دامەزراوەی حکومی. بە سکڕۆڵکردن ببینە هەر پرۆژەیەک لە کوێیە و چ کارێکمان بۆ کردووە.',
-    en: 'Hospitals, beauty centres, hotels, restaurants and government offices. Scroll to see where each project is and what we did there.',
-    ar: 'مستشفيات ومراكز تجميل وفنادق ومطاعم ودوائر حكومية. مرّر لترى موقع كل مشروع وما أنجزناه فيه.',
+    ku: 'نەخۆشخانە، سەنتەری جوانکاری، هۆتێل، چێشتخانە و دامەزراوەی حکومی. بە بوار فلتەریان بکە یان بە ناو بگەڕێ؛ لە هەر کارتێکەوە دەچیتە پەڕەی ئەو بوارەی کارمان تێدا کردووە.',
+    en: 'Hospitals, beauty centres, hotels, restaurants and government offices. Filter by field or search by name; each card links to the fields we worked in there.',
+    ar: 'مستشفيات ومراكز تجميل وفنادق ومطاعم ودوائر حكومية. صنّفها حسب المجال أو ابحث بالاسم؛ وكل بطاقة تقودك إلى المجالات التي عملنا فيها.',
   } as L10n,
   works: { ku: 'بوار', en: 'trades', ar: 'تخصصات' } as L10n,
-  mapLabel: { ku: 'نەخشەی پرۆژەکان لە هەولێر و پیرمام. ئێستا دیارکراو:', en: 'Map of projects in Erbil and Pirmam. Highlighted:', ar: 'خريطة المشاريع في أربيل وبيرمام. المحدد الآن:' } as L10n,
 };
 
 export const sectorLabels: Record<string, L10n> = {
@@ -181,6 +180,10 @@ export const contactSection = {
     en: 'Your details are used only to reply to your request.',
     ar: 'تُستخدم بياناتك فقط للرد على طلبك.',
   } as L10n,
+};
+
+export const fieldsStrip = {
+  label: { ku: 'هەشت بوار، یەک تیم', en: 'Eight fields, one team', ar: 'ثمانية مجالات وفريق واحد' } as L10n,
 };
 
 export const footer = {

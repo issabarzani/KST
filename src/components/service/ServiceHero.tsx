@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Link } from 'react-router';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLang, homePath, sectionPath } from '@/lib/lang-context';
 import { servicePageText as T, services, type Service } from '@/lib/services';
 import { accentTokens } from '@/lib/color';
 import { heroes } from '@/components/drawings';
+import { useScrollProgress } from '@/lib/use-scroll-progress';
 import { serviceIcons } from '@/components/service/icons';
 
 export const dwg = (n: number) => `KST-${String(n).padStart(2, '0')}`;
@@ -21,26 +22,8 @@ export default function ServiceHero({ svc }: { svc: Service }) {
   const Art = heroes[svc.slug];
   const Sep = lang === 'en' ? ChevronRight : ChevronLeft;
 
-  // Scroll progress through the hero (0 at the top, 1 once it has scrolled away), used by the drawings
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    let frame = 0;
-    const update = () => {
-      frame = 0;
-      const h = el.offsetHeight || 1;
-      el.style.setProperty('--p', String(Math.min(1, Math.max(0, window.scrollY / (h * 0.8)))));
-    };
-    const onScroll = () => {
-      if (!frame) frame = requestAnimationFrame(update);
-    };
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      if (frame) cancelAnimationFrame(frame);
-    };
-  }, []);
+  // Scroll progress through the hero (--p), used by the drawings to move with the scroll
+  useScrollProgress(ref);
 
   return (
     <section ref={ref} className="relative overflow-hidden bg-[hsl(var(--night))] pt-[72px] text-white">
@@ -100,7 +83,10 @@ export default function ServiceHero({ svc }: { svc: Service }) {
             </div>
           </div>
 
-          <figure className="rise relative mx-auto w-full max-w-[34rem] lg:max-w-none" style={{ animationDelay: '0.3s' }}>
+          <figure
+            className="parallax rise relative mx-auto w-full max-w-[34rem] lg:max-w-none"
+            style={{ animationDelay: '0.3s', translate: '0 calc(var(--p, 0) * 48px)', scale: 'calc(1 - var(--p, 0) * 0.04)' }}
+          >
             <div className="relative overflow-hidden rounded-md border border-white/15 bg-[hsl(var(--night-2))]/70 p-3 sm:p-5">
               <Art accent={svc.accent} accent2={svc.accent2 ?? svc.accent} label={`${T.drawingLabel[lang]} ${svc.name[lang]}`} />
               <figcaption className="mt-2 flex items-center justify-between border-t border-white/10 pt-3 text-[0.7rem] font-bold uppercase tracking-[0.12em] text-white/45" style={{ fontFamily: 'var(--font-latin)' }}>
