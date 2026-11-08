@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { MessageCircle, Send, X } from 'lucide-react';
 import { useLang, localize, sectionPath, stripLang, type Lang } from '@/lib/lang-context';
 import { chatText as T, localAnswer, suggestions } from '@/lib/kb';
-import { isServiceSlug } from '@/lib/services';
+import { getService, isServiceSlug } from '@/lib/services';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
 
 /*
@@ -28,11 +28,14 @@ function RichText({ text, lang, onFollow }: { text: string; lang: Lang; onFollow
   for (const m of text.matchAll(LINK)) {
     const [whole, label, href, bare] = m;
     const to = internalPath(href ?? bare, lang);
+    // a field page link always shows that field's name in the language being read
+    const slug = to ? /\/services\/([a-z-]+)$/.exec(to)?.[1] : undefined;
+    const name = slug ? getService(slug)?.name[lang] : undefined;
     out.push(text.slice(last, m.index));
     out.push(
       to ? (
         <Link key={m.index} to={to} onClick={onFollow} className="font-bold text-primary underline underline-offset-2">
-          {label ?? whole}
+          {name ?? label ?? whole}
         </Link>
       ) : (
         <Fragment key={m.index}>{label ?? whole}</Fragment>

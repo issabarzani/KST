@@ -31,17 +31,38 @@ function tidy(text) {
     .trim();
 }
 
+/*
+  Which language the visitor's last message is in. Arabic and Kurdish share a script, and models
+  sometimes answer an Arabic question in Kurdish, so the prompt is told explicitly.
+*/
+function replyLanguage(text) {
+  const latin = (text.match(/[A-Za-z]/g) || []).length;
+  const arabicScript = (text.match(/[\u0600-\u06FF]/g) || []).length;
+  if (latin > arabicScript) return 'English';
+  if (/[ێۆڕڵەڤ]/.test(text)) return 'Kurdish (the same dialect the visitor uses: Sorani or Badini)';
+  if (arabicScript) return 'Arabic';
+  return null;
+}
+
+function systemFor(messages) {
+  const lang = replyLanguage(messages[messages.length - 1].content);
+  return lang ? `${SYSTEM_PROMPT}\n\nTHE VISITOR'S LAST MESSAGE IS IN ${lang.toUpperCase()}. Write your whole reply in ${lang}.` : SYSTEM_PROMPT;
+}
+
 async function askWorkersAI(ai, messages) {
+  const system = systemFor(messages);
   for (const model of WORKERS_AI_MODELS) {
     try {
       const out = await ai.run(model.id, {
-        messages: [{ role: 'system', content: SYSTEM_PROMPT }, ...messages],
-        [model.limit]: Math.max(MAX_TOKENS, 800), // room for the model to think before it answers
+        messages: [{ role: 'system', content: system }, ...messages],
+        [model.limit]: Math.max(MAX_TOKENS, 1500), // room for the model to think before it answers
         temperature: 0.3,
       });
-      const text = tidy(out?.choices?.[0]?.message?.content ?? out?.response ?? '');
-      if (text) return text;
-      console.error('chat.workers_ai_empty', model.id);
+      const choice = out?.choices?.[0];
+      const text = tidy(choice?.message?.content ?? out?.response ?? '');
+      // a reply cut off by the length limit is not shown; the next model tries instead
+      if (text && choice?.finish_reason !== 'length') return text;
+      console.error('chat.workers_ai_empty_or_cut', model.id, choice?.finish_reason);
     } catch (e) {
       console.error('chat.workers_ai_failed', model.id, e && e.message);
     }
@@ -53,7 +74,7 @@ async function askClaude(key, messages) {
   const r = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
     headers: { 'content-type': 'application/json', 'x-api-key': key, 'anthropic-version': '2023-06-01' },
-    body: JSON.stringify({ model: CHAT_MODEL, max_tokens: MAX_TOKENS, system: SYSTEM_PROMPT, messages }),
+    body: JSON.stringify({ model: CHAT_MODEL, max_tokens: MAX_TOKENS, system: systemFor(messages), messages }),
   });
   if (!r.ok) {
     console.error('chat.upstream_failed', r.status);
