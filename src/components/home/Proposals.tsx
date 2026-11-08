@@ -202,9 +202,6 @@ export default function Proposals() {
                 </li>
               ))}
             </ul>
-            {tab === 'hvac' && (
-              <img src="/assets/proposals/hvac-rooftop.webp" alt="" width={900} height={506} loading="lazy" decoding="async" className="mt-8 aspect-[16/10] w-full rounded-sm object-cover opacity-90 ring-1 ring-white/15" />
-            )}
           </div>
           <div>{tab === 'hvac' ? <Hvac /> : <Healthcare />}</div>
         </div>
