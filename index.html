@@ -34,8 +34,20 @@
           if (root.matches && root.matches('.reveal:not([data-in])')) io.observe(root);
           if (root.querySelectorAll) root.querySelectorAll('.reveal:not([data-in])').forEach(function (el) { io.observe(el); });
         };
+        // Backup for browsers that pause the observer: a light position check on scroll
+        var timer = 0;
+        var check = function () {
+          timer = 0;
+          var limit = window.innerHeight * 0.96;
+          document.querySelectorAll('.reveal:not([data-in])').forEach(function (el) {
+            var r = el.getBoundingClientRect();
+            if (r.top < limit && r.bottom > 0) { el.setAttribute('data-in', ''); io.unobserve(el); }
+          });
+        };
+        window.addEventListener('scroll', function () { if (!timer) timer = setTimeout(check, 150); }, { passive: true });
         var start = function () {
           watch(document);
+          check();
           new MutationObserver(function (list) {
             list.forEach(function (m) { m.addedNodes.forEach(function (n) { if (n.nodeType === 1) watch(n); }); });
           }).observe(document.body, { childList: true, subtree: true });
