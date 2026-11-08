@@ -5,15 +5,19 @@
 
   What it does:
   1. Builds the site (client + server) with VITE_SELF_HOSTED=true.
-  2. Starts the built server for a moment and saves the fully rendered home page and 404 page
-     as index.html and 404.html, so visitors and search engines get real HTML instantly.
-  3. Removes the website builder's own scripts, writes robots.txt and sitemap.xml.
+  2. Starts the built server for a moment and saves every page fully rendered, in all three languages:
+       /  /en  /ar                      ->  index.html  en.html  ar.html
+       /services/<slug> (and /en, /ar)  ->  services/<slug>.html  en/services/<slug>.html  ar/services/<slug>.html
+       not found pages                  ->  404.html  en/404.html  ar/404.html
+     so visitors and search engines get real HTML instantly, with the right language and direction.
+  3. Removes the website builder's own scripts, writes robots.txt, sitemap.xml (with language alternates)
+     and _redirects.
   4. Regenerates functions-lib/chat-config.js (the AI assistant's company facts) from the site content.
 
   Change the domain with SITE_URL, e.g.  SITE_URL=https://example.com npm run build:static
 */
 import { spawn, spawnSync } from 'node:child_process';
-import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import http from 'node:http';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -40,6 +44,7 @@ run(['vite', 'build']);
 run(['vite', 'build', '--ssr', 'src/server/entry.ts']);
 
 step('Saving the AI assistant settings for Cloudflare');
+let slugs = [];
 {
   const { createServer } = await import('vite');
   const vite = await createServer({
@@ -61,6 +66,7 @@ step('Saving the AI assistant settings for Cloudflare');
       '',
     ].join('\n');
     writeFileSync(join(root, 'functions-lib', 'chat-config.js'), file);
+    slugs = (await vite.ssrLoadModule('/src/lib/services.ts')).serviceSlugs;
   } finally {
     await vite.close();
   }
@@ -100,16 +106,59 @@ try {
     /\s*<script[^>]*src="\/airo-logo-orientation\.js"[^>]*><\/script>/g,
     /\s*<script[^>]*src="\/analytics\.js"[^>]*><\/script>/g,
   ];
-  const clean = (html) => builderScripts.reduce((h, re) => h.replace(re, ''), html);
+  // (React writes hreflang as hrefLang; HTML does not mind, but some SEO checkers do)
+  const clean = (html) => builderScripts.reduce((h, re) => h.replace(re, ''), html).replace(/ hrefLang=/g, ' hreflang=');
 
-  const home = await get('/');
-  if (home.status !== 200 || !home.body.includes('id="services"')) fail(`home page render failed (${home.status})`);
-  if (home.body.includes('name="robots" content="noindex')) fail('home page was rendered as noindex');
-  writeFileSync(join(out, 'index.html'), clean(home.body));
+  const LANGS = [
+    { prefix: '', html: 'lang="ckb" dir="rtl"', hreflang: 'ckb' },
+    { prefix: '/en', html: 'lang="en" dir="ltr"', hreflang: 'en' },
+    { prefix: '/ar', html: 'lang="ar" dir="rtl"', hreflang: 'ar' },
+  ];
+  // Load the main text and heading fonts straight away, so the text does not jump when they arrive
+  const fontFiles = readdirSync(join(out, 'assets'));
+  const font = (re) => fontFiles.find((f) => re.test(f));
+  const preloads = (fonts) =>
+    fonts
+      .filter(Boolean)
+      .map((f) => `<link rel="preload" href="/assets/${f}" as="font" type="font/woff2" crossorigin>`)
+      .join('');
+  const arabicFonts = preloads([font(/^noto-kufi-arabic-arabic-800-normal-.*\.woff2$/), font(/^noto-sans-arabic-arabic-400-normal-.*\.woff2$/)]);
+  const latinFonts = preloads([font(/^manrope-latin-800-normal-.*\.woff2$/), font(/^manrope-latin-400-normal-.*\.woff2$/)]);
+  const save = (file, html, lang) => {
+    const target = join(out, file);
+    mkdirSync(dirname(target), { recursive: true });
+    const fonts = lang.hreflang === 'en' ? latinFonts : arabicFonts;
+    writeFileSync(
+      target,
+      clean(html)
+        .replace(/<html lang="[^"]*" dir="[^"]*">/, `<html ${lang.html}>`)
+        .replace('<meta charset="UTF-8" />', `<meta charset="UTF-8" />${fonts}`)
+    );
+  };
 
-  const missing = await get('/__kst_missing_page__');
-  if (missing.status !== 404) fail(`404 page render returned ${missing.status}`);
-  writeFileSync(join(out, '404.html'), clean(missing.body).replace(/<link rel="canonical"[^>]*>/, ''));
+  let count = 0;
+  for (const lang of LANGS) {
+    const pages = [
+      { url: lang.prefix || '/', file: lang.prefix ? `${lang.prefix.slice(1)}.html` : 'index.html', mark: 'id="services"' },
+      ...slugs.map((slug) => ({
+        url: `${lang.prefix}/services/${slug}`,
+        file: `${lang.prefix ? lang.prefix.slice(1) + '/' : ''}services/${slug}.html`,
+        mark: `data-service="${slug}"`,
+      })),
+    ];
+    for (const page of pages) {
+      const r = await get(page.url);
+      if (r.status !== 200 || !r.body.includes(page.mark)) fail(`${page.url} render failed (${r.status})`);
+      if (r.body.includes('name="robots" content="noindex')) fail(`${page.url} was rendered as noindex`);
+      if (!r.body.includes(`hrefLang="${lang.hreflang}"`)) fail(`${page.url} has no language alternates`);
+      save(page.file, r.body, lang);
+      count += 1;
+    }
+    const missing = await get(`${lang.prefix}/__kst_missing_page__`);
+    if (missing.status !== 404) fail(`404 page render returned ${missing.status}`);
+    save(`${lang.prefix ? lang.prefix.slice(1) + '/' : ''}404.html`, missing.body.replace(/<link rel="canonical"[^>]*>/, ''), lang);
+  }
+  console.log(`  ${count} pages and 3 not-found pages saved`);
 } finally {
   server.kill();
 }
@@ -119,12 +168,32 @@ for (const f of ['airo-video-slots.js', 'airo-logo-orientation.js', 'analytics.j
   if (existsSync(join(out, f))) rmSync(join(out, f));
 }
 writeFileSync(join(out, 'robots.txt'), `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+
+// Sitemap: every page in every language, each listing its Kurdish, English and Arabic versions
 const today = new Date().toISOString().slice(0, 10);
+const addr = (prefix, path) => `${SITE_URL}${prefix}${path === '/' ? (prefix ? '' : '/') : path}`;
+const paths = ['/', ...slugs.map((s) => `/services/${s}`)];
+const alternates = (path) =>
+  [['ckb', ''], ['en', '/en'], ['ar', '/ar'], ['x-default', '']]
+    .map(([hl, p]) => `    <xhtml:link rel="alternate" hreflang="${hl}" href="${addr(p, path)}"/>`)
+    .join('\n');
+const urls = paths.flatMap((path) =>
+  ['', '/en', '/ar'].map(
+    (prefix) =>
+      `  <url>\n    <loc>${addr(prefix, path)}</loc>\n${alternates(path)}\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${path === '/' ? '1.0' : '0.8'}</priority>\n  </url>`
+  )
+);
 writeFileSync(
   join(out, 'sitemap.xml'),
-  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url>\n    <loc>${SITE_URL}/</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>1.0</priority>\n  </url>\n</urlset>\n`
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n${urls.join('\n')}\n</urlset>\n`
+);
+
+// Short addresses that people may type: /services goes to the services section of the home page
+writeFileSync(
+  join(out, '_redirects'),
+  ['/services /#services 301', '/services/ /#services 301', '/en/services /en#services 301', '/en/services/ /en#services 301', '/ar/services /ar#services 301', '/ar/services/ /ar#services 301', '/en/ /en 301', '/ar/ /ar 301', ''].join('\n')
 );
 
 const html = readFileSync(join(out, 'index.html'), 'utf8');
-console.log(`\n✓ Static site ready in dist/client  (home page ${Math.round(html.length / 1024)} KB, domain ${SITE_URL})`);
+console.log(`\n✓ Static site ready in dist/client  (${urls.length} pages in the sitemap, home page ${Math.round(html.length / 1024)} KB, domain ${SITE_URL})`);
 process.exit(0);

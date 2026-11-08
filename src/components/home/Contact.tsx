@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState, type ChangeEvent, type FormEvent } from 'react';
+import { useLocation } from 'react-router';
 import { CheckCircle2, Loader2, MapPin } from 'lucide-react';
 import { home } from 'virtual:content';
 import { useLang } from '@/lib/lang-context';
-import { contactSection as c, services } from '@/lib/i18n';
+import { contactSection as c, servicesSection } from '@/lib/i18n';
+import { getService, isServiceSlug, services } from '@/lib/services';
 import { CONTACT_FORM_ENDPOINT } from '@/config/forms';
 import { waLink, whatsappNumbers } from '@/lib/contact';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
@@ -50,6 +52,20 @@ export default function Contact() {
     return () => window.removeEventListener('kst:prefill', onPrefill);
   }, []);
 
+  // A service page's "request a quote" button opens /?service=hvac#contact: choose that field
+  const location = useLocation();
+  useEffect(() => {
+    const fromQuery = new URLSearchParams(location.search).get('service');
+    const fromHash = /[?&]service=([\w-]+)/.exec(location.hash)?.[1]; // also accept #contact?service=hvac
+    const slug = fromQuery ?? fromHash;
+    if (!isServiceSlug(slug)) return;
+    setDone(false);
+    setData((d) => ({ ...d, service: slug, message: d.message || `${servicesSection.prefill[lang]} ${getService(slug)!.name[lang]}. ` }));
+    if (fromHash) document.getElementById('contact')?.scrollIntoView();
+    // only when the address changes
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.search, location.hash]);
+
   useEffect(() => {
     if (done) doneRef.current?.focus();
   }, [done]);
@@ -78,7 +94,7 @@ export default function Contact() {
 
     setSending(true);
     setFailed(false);
-    const svc = services.find((s) => s.key === data.service);
+    const svc = getService(data.service);
     try {
       const res = await fetch(CONTACT_FORM_ENDPOINT, {
         method: 'POST',
@@ -205,7 +221,7 @@ export default function Contact() {
                       {c.servicePlaceholder[lang]}
                     </option>
                     {services.map((s) => (
-                      <option key={s.key} value={s.key}>
+                      <option key={s.slug} value={s.slug}>
                         {s.name[lang]}
                       </option>
                     ))}

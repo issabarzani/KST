@@ -1,8 +1,48 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { Fragment, useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { MessageCircle, Send, X } from 'lucide-react';
-import { useLang } from '@/lib/lang-context';
+import { useLang, localize, sectionPath, stripLang, type Lang } from '@/lib/lang-context';
 import { chatText as T, localAnswer, suggestions } from '@/lib/kb';
+import { isServiceSlug } from '@/lib/services';
 import WhatsAppIcon from '@/components/WhatsAppIcon';
+
+/*
+  Turns the assistant's links into real links, in the language the visitor is reading:
+  [label](/services/hvac), a bare /services/hvac, or a full https://kurdistanserviceteam.com/... address.
+  Only pages of this website become links; anything else stays plain text.
+*/
+const LINK = /\[([^\]\n]{1,120})\]\(([^)\s]{1,200})\)|((?:https?:\/\/(?:www\.)?kurdistanserviceteam\.com)?(?:\/(?:en|ar))?\/services\/[a-z-]+)/g;
+
+function internalPath(href: string, lang: Lang): string | null {
+  const path = href.replace(/^https?:\/\/(?:www\.)?kurdistanserviceteam\.com/i, '').replace(/[.,;:!?،؛]+$/, '');
+  const base = stripLang(path.split('#')[0] || '/');
+  const m = /^\/services\/([a-z-]+)\/?$/.exec(base);
+  if (m && isServiceSlug(m[1])) return localize(`/services/${m[1]}`, lang);
+  if (base === '/') return localize('/', lang) + (path.includes('#') ? `#${path.split('#')[1]}` : '');
+  return null;
+}
+
+function RichText({ text, lang, onFollow }: { text: string; lang: Lang; onFollow: () => void }) {
+  const out: ReactNode[] = [];
+  let last = 0;
+  for (const m of text.matchAll(LINK)) {
+    const [whole, label, href, bare] = m;
+    const to = internalPath(href ?? bare, lang);
+    out.push(text.slice(last, m.index));
+    out.push(
+      to ? (
+        <Link key={m.index} to={to} onClick={onFollow} className="font-bold text-primary underline underline-offset-2">
+          {label ?? whole}
+        </Link>
+      ) : (
+        <Fragment key={m.index}>{label ?? whole}</Fragment>
+      )
+    );
+    last = (m.index ?? 0) + whole.length;
+  }
+  out.push(text.slice(last));
+  return <>{out}</>;
+}
 
 interface Msg {
   role: 'user' | 'assistant';
@@ -32,6 +72,8 @@ async function askAI(history: Msg[]): Promise<string | null> {
 
 export default function ChatAgent() {
   const { lang } = useLang();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [text, setText] = useState('');
@@ -73,7 +115,13 @@ export default function ChatAgent() {
 
   const goQuote = () => {
     setOpen(false);
-    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+    const el = stripLang(location.pathname) === '/' ? document.getElementById('contact') : null;
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    else navigate(sectionPath('contact', lang));
+  };
+  // On a phone the chat covers the page, so close it when the visitor opens a link
+  const onFollow = () => {
+    if (window.innerWidth < 640) setOpen(false);
   };
 
   return (
@@ -132,7 +180,7 @@ export default function ChatAgent() {
                     : 'rounded-ss-none bg-muted'
                 }`}
               >
-                {m.content}
+                {m.role === 'assistant' ? <RichText text={m.content} lang={lang} onFollow={onFollow} /> : m.content}
               </div>
             ))}
             {busy && <div className="w-fit rounded-lg bg-muted px-3.5 py-2.5 text-sm text-muted-foreground">{T.thinking[lang]}</div>}

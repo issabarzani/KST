@@ -98,7 +98,10 @@ npx wrangler pages dev dist/client   # تاقیکردنەوە لەسەر کۆم�
 SITE_URL=https://other-domain.com npm run build:static   # دۆمەینێکی تر
 ```
 
-- `scripts/build-static.mjs`: بیلد، پەڕەی ئامادەکراو (`index.html`، `404.html`)، `robots.txt`، `sitemap.xml`، و `functions-lib/chat-config.js`.
+- `scripts/build-static.mjs`: بیلد، هەموو پەڕەکان بە سێ زمان وەک HTMLی ئامادە (`index.html`، `en.html`، `ar.html`، `services/<slug>.html`، `en/services/...`، `ar/services/...`، و `404.html` بۆ هەر زمانێک)، `robots.txt`، `sitemap.xml` (لەگەڵ hreflang)، `_redirects`، و `functions-lib/chat-config.js`.
+- `src/lib/services.ts`: **تاکە سەرچاوەی ٨ بوارەکە** (ناو، کورتە، خزمەتگوزارییە لاوەکییەکان، هەنگاوەکان، پرسیارە باوەکان، ڕەنگ). کارتەکانی پەڕەی سەرەکی، ٨ پەڕەکە، مێنیو، فووتەر، فۆرمی پەیوەندی و یاریدەدەری AI هەموویان لێرەوە دەخوێننەوە.
+- کڕیارەکانی هەر پەڕەیەک خۆکار لە `src/content/data/portfolio.json` فلتەر دەکرێن (بەپێی `sectors`)؛ کڕیارێک لە یەک شوێنەوە زیاد یان لاببە.
+- ناونیشانەکان: کوردی `/services/hvac`، ئینگلیزی `/en/services/hvac`، عەرەبی `/ar/services/hvac`.
 - `functions/api/chat.js`: یاریدەدەری AI لەسەر Cloudflare.
 - `public/_headers`: هێدەرەکانی ئاسایش.
 - `npm run build` و `dist/server.bundle.mjs` هێشتا بۆ هۆستینگی Node کار دەکەن.

@@ -23,6 +23,7 @@ export const proposalsSection = {
     healthcare: l('نەخۆشخانە و ناوەندە پزیشکییەکان', 'Healthcare facilities', 'المنشآت الصحية'),
   } as Record<ProposalId, L10n>,
   request: l('داوای ئەم پێشنیارە بکە', 'Request this proposal', 'اطلب هذا العرض'),
+  more: l('زیاتر دەربارەی:', 'More about', 'المزيد عن'),
   requestMessage: {
     hvac: l(
       'داوای پێشنیاری ساردکەرەوە و HVAC دەکەم بۆ ئەم پرۆژەیە:',

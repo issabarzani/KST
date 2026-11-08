@@ -92,3 +92,4 @@ dist-preview
 
 # Private: personal contact details of the former ZSC director (kept in the zip, not on GitHub)
 docs/PROPOSAL_SOURCE.md
+.preview/

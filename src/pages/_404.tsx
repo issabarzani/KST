@@ -1,6 +1,6 @@
 import { Helmet } from '@dr.pogodin/react-helmet';
 import { Link } from '../router';
-import { useLang } from '@/lib/lang-context';
+import { useLang, homePath, sectionPath } from '@/lib/lang-context';
 
 const t = {
   title: { ku: 'ئەم پەڕەیە نەدۆزرایەوە', en: 'This page does not exist', ar: 'هذه الصفحة غير موجودة' },
@@ -36,8 +36,8 @@ export default function NotFoundPage() {
         <h1 className="mt-6 text-3xl font-extrabold sm:text-4xl">{t.title[lang]}</h1>
         <p className="mt-4 max-w-xl text-lg leading-relaxed text-white/70">{t.text[lang]}</p>
         <div className="mt-10 flex flex-wrap gap-3">
-          <Link to="/" className="btn btn-gold">{t.home[lang]}</Link>
-          <a href="/#contact" className="btn btn-ghost-light">{t.contact[lang]}</a>
+          <Link to={homePath(lang)} className="btn btn-gold">{t.home[lang]}</Link>
+          <Link to={sectionPath('contact', lang)} className="btn btn-ghost-light">{t.contact[lang]}</Link>
         </div>
       </div>
     </main>

@@ -27,7 +27,7 @@ export const ui = {
   theme: { ku: 'گۆڕینی دیمەن', en: 'Switch theme', ar: 'تبديل المظهر' } as L10n,
   menu: { ku: 'مینیو', en: 'Menu', ar: 'القائمة' } as L10n,
   stats: [
-    { value: '10+', label: { ku: 'بواری پسپۆڕ', en: 'Specialist sectors', ar: 'قطاعات متخصصة' } },
+    { value: '8', label: { ku: 'بواری پسپۆڕ', en: 'Specialist fields', ar: 'مجالات متخصصة' } },
     { value: '100+', label: { ku: 'پرۆژەی تەواوکراو', en: 'Projects completed', ar: 'مشروع منجز' } },
     { value: '15+', label: { ku: 'ساڵی ئەزموون', en: 'Years of experience', ar: 'سنة خبرة' } },
   ] as { value: string; label: L10n }[],
@@ -64,123 +64,26 @@ export const about = {
 };
 
 export const servicesSection = {
-  title: { ku: 'بواری خزمەتگوزاریەکانمان', en: 'What we build, install and maintain', ar: 'ما نبنيه ونركّبه ونصونه' } as L10n,
+  title: { ku: 'بواری خزمەتگوزاریەکانمان', en: 'Eight fields, one accountable team', ar: 'ثمانية مجالات وفريق واحد مسؤول' } as L10n,
   intro: {
     ku: 'هەموو بوارەکان لەژێر یەک بەڕێوەبردندان، بۆ ئەوەی پرۆژەکەت بێ دووبارەکاری و بێ جیاوازی لە نێوان پیمانکارەکان تەواو بێت.',
     en: 'Every trade sits under one management, so your project is not split between contractors who never talk to each other.',
     ar: 'جميع التخصصات تحت إدارة واحدة، فلا يتوزع مشروعك بين مقاولين لا يتواصلون.',
   } as L10n,
-  more: { ku: 'داوای نرخ بۆ ئەم بوارە', en: 'Quote for this service', ar: 'اطلب عرضاً لهذه الخدمة' } as L10n,
+  more: { ku: 'زیاتر بزانە', en: 'Learn more', ar: 'اعرف المزيد' } as L10n,
   hint: {
-    ku: 'خزمەتگوزارییەک هەڵبژێرە بۆ ئەوەی ببینیت لە کوێی بیناکەدا کار دەکەین.',
-    en: 'Pick a service to see where it sits in a building we deliver.',
-    ar: 'اختر خدمة لترى موقعها في المبنى الذي ننفذه.',
+    ku: 'بە سکڕۆڵکردن ببینە هەر بوارێک لە کوێی بیناکەدا کار دەکات. کلیک لە هەر کارتێک بکە بۆ پەڕەی تەواوی ئەو بوارە.',
+    en: 'Scroll to see where each field sits in a building we deliver. Open any card for the full page on that field.',
+    ar: 'مرّر لترى موقع كل مجال في المبنى الذي ننفذه، وافتح أي بطاقة لصفحة المجال كاملة.',
   } as L10n,
   drawing: {
     ku: 'وێنەی بڕگەی بینایەک کە هەموو بوارەکانی KST نیشان دەدات. ئێستا دیارکراو:',
-    en: 'Section drawing of a building showing every KST trade. Highlighted:',
-    ar: 'مقطع لمبنى يوضح جميع تخصصات KST. المحدد الآن:',
+    en: 'Section drawing of a building showing every KST field. Highlighted:',
+    ar: 'مقطع لمبنى يوضح جميع مجالات KST. المحدد الآن:',
   } as L10n,
   prefill: { ku: 'داوای نرخم هەیە بۆ:', en: 'I would like a quote for:', ar: 'أرغب في عرض سعر لـ:' } as L10n,
+  menuAll: { ku: 'هەموو بوارەکان لە پەڕەی سەرەکی', en: 'All fields on the home page', ar: 'جميع المجالات في الصفحة الرئيسية' } as L10n,
 };
-
-export type ServiceKey =
-  | 'construction' | 'hvac' | 'ventilation' | 'electrical' | 'cleanroom'
-  | 'medical' | 'it' | 'pm';
-
-export const services: { key: ServiceKey; name: L10n; desc: L10n; scope: L10n[] }[] = [
-  {
-    key: 'construction',
-    name: { ku: 'بیناسازی گشتی و کارە شارستانییەکان', en: 'General construction & civil works', ar: 'البناء العام والأعمال المدنية' },
-    desc: {
-      ku: 'پرۆژەی بیناسازی تەواو لە دیزاین تا تەواوبوون: بیناکانی بازرگانی، نەخۆشخانە، هۆتێل و کۆمپلێکسی نیشتەجێبوون.',
-      en: 'Complete construction from design to handover: commercial buildings, hospitals, hotels and residential complexes.',
-      ar: 'مشاريع بناء متكاملة من التصميم حتى التسليم: مبانٍ تجارية ومستشفيات وفنادق ومجمعات سكنية.',
-    },
-    scope: [
-      { ku: 'کاری بیناسازی و تەواوکاری', en: 'Building and finishing works', ar: 'أعمال البناء والتشطيب' },
-      { ku: 'ناوەوەی بینا و دیکۆریشن', en: 'Interior fit-out and decoration', ar: 'التجهيز الداخلي والديكور' },
-      { ku: 'کلینیک، چێشتخانە، دوکان و ئۆفیس', en: 'Clinics, restaurants, shops and offices', ar: 'العيادات والمطاعم والمحلات والمكاتب' },
-      { ku: 'نۆژەنکردنەوەی بینای ئێستا', en: 'Renovating existing buildings', ar: 'تجديد المباني القائمة' },
-    ],
-  },
-  {
-    key: 'hvac',
-    name: { ku: 'سیستەمی ساردکەرەوە و HVAC', en: 'Refrigeration & HVAC', ar: 'أنظمة التبريد والتكييف' },
-    desc: { ku: 'دامەزراندن و چاککردنەوەی سیستەمی ساردکەرەوە', en: 'Installation and servicing of cooling systems', ar: 'تركيب وصيانة أنظمة التبريد' },
-    scope: [
-      { ku: 'سیستەمی سپلیت، VRF/VRV و دەکت', en: 'Split, VRF/VRV and ducted systems', ar: 'أنظمة سبليت وVRF/VRV والمجاري' },
-      { ku: 'ساردکەرەوە و ژووری سارد', en: 'Refrigeration and cold rooms', ar: 'التبريد والغرف الباردة' },
-      { ku: 'هەژمارکردنی بارستایی و هەڵبژاردنی ئامێر', en: 'Load calculation and equipment selection', ar: 'حساب الأحمال واختيار المعدات' },
-      { ku: 'چاککردنەوە و چاودێری بەردەوام', en: 'Repair and regular servicing', ar: 'الإصلاح والصيانة الدورية' },
-    ],
-  },
-  {
-    key: 'ventilation',
-    name: { ku: 'سیستەمی ئایر فرێش و ڤێنتیلەیشن', en: 'Fresh air & ventilation', ar: 'أنظمة الهواء النقي والتهوية' },
-    desc: { ku: 'چارەسەری هەوای پاک بۆ بیناکان', en: 'Clean-air solutions for buildings', ar: 'حلول الهواء النقي للمباني' },
-    scope: [
-      { ku: 'سیستەمی ئایر فرێش و هەواکێشان', en: 'Fresh-air and exhaust systems', ar: 'أنظمة الهواء النقي والشفط' },
-      { ku: 'یەکەی مامەڵەکردنی هەوا (AHU)', en: 'Air handling units (AHU)', ar: 'وحدات مناولة الهواء (AHU)' },
-      { ku: 'هەواکێشانی چێشتخانە', en: 'Kitchen extraction', ar: 'شفط المطابخ' },
-      { ku: 'هاوسەنگکردن و تاقیکردنەوەی هەوا', en: 'Air balancing and testing', ar: 'موازنة الهواء واختباره' },
-    ],
-  },
-  {
-    key: 'electrical',
-    name: { ku: 'ئەندازیاری کارەبا و وزە', en: 'Electrical systems & power', ar: 'الأنظمة الكهربائية والطاقة' },
-    desc: { ku: 'سیستەمی کارەبای پڕۆفیشنەل بۆ هەموو جۆرە بیناکان', en: 'Professional electrical systems for every building type', ar: 'أنظمة كهربائية احترافية لجميع أنواع المباني' },
-    scope: [
-      { ku: 'تابلۆی دابەشکردن و کابل', en: 'Distribution panels and wiring', ar: 'لوحات التوزيع والتمديدات' },
-      { ku: 'مۆلیدە و کارەبای یەدەگ', en: 'Generators and backup power', ar: 'المولدات والطاقة الاحتياطية' },
-      { ku: 'ڕووناکی و ئەرسکردن', en: 'Lighting and earthing', ar: 'الإنارة والتأريض' },
-      { ku: 'پشکنین و تاقیکردنەوەی سەلامەتی', en: 'Safety inspection and testing', ar: 'فحص واختبار السلامة' },
-    ],
-  },
-  {
-    key: 'cleanroom',
-    name: { ku: 'هۆڵەکانی نەشتەرگەری و کلینرووم', en: 'Modular operating rooms & cleanrooms', ar: 'غرف العمليات المعيارية والغرف النظيفة' },
-    desc: { ku: 'دامەزراندنی هۆڵی نەشتەرگەری بەپێی ستانداردی نێودەوڵەتی', en: 'Operating rooms built to international standards', ar: 'غرف عمليات وفق المعايير الدولية' },
-    scope: [
-      { ku: 'دامەزراندنی هۆڵی نەشتەرگەری', en: 'Operating theatre fit-out', ar: 'تجهيز غرف العمليات' },
-      { ku: 'فلتەری HEPA و هاوسەنگی پەستان', en: 'HEPA filters and room pressure balance', ar: 'فلاتر HEPA وموازنة ضغط الغرف' },
-      { ku: 'خزمەتگوزاری و پشکنینی خولی', en: 'Periodic servicing and checks', ar: 'الخدمة والفحص الدوري' },
-    ],
-  },
-  {
-    key: 'medical',
-    name: { ku: 'چاککردنەوەی ئامێری پزیشکی', en: 'Medical equipment maintenance', ar: 'صيانة المعدات الطبية' },
-    desc: { ku: 'خزمەتگوزاری و چاککردنەوەی ئامێری پزیشکی', en: 'Servicing and repair of medical equipment', ar: 'خدمة وإصلاح المعدات الطبية' },
-    scope: [
-      { ku: 'چاککردنی بۆرد، تا ٧٠٪ هەرزانتر لە نرخی پارچەی کارگە', en: 'Board-level repair, up to 70% below factory module price', ar: 'إصلاح اللوحات بتكلفة أقل حتى 70% من سعر القطعة الأصلية' },
-      { ku: 'دابینکردنی سەربەخۆی ئامێر', en: 'Independent equipment sourcing', ar: 'توريد مستقل للمعدات' },
-      { ku: 'گەرەنتی درێژکراو: ٤ ساڵی زیاتر', en: 'Extended guarantee: 4 extra years', ar: 'ضمان ممتد: 4 سنوات إضافية' },
-      { ku: 'چاودێری پێشوەختە', en: 'Preventive maintenance', ar: 'الصيانة الوقائية' },
-    ],
-  },
-  {
-    key: 'it',
-    name: { ku: 'چارەسەری تەکنەلۆژی و ئایتی', en: 'IT solutions & smart systems', ar: 'حلول تكنولوجيا المعلومات والأنظمة الذكية' },
-    desc: { ku: 'سیستەمی زیرەک و چارەسەری تەکنەلۆژی', en: 'Smart-building systems and IT infrastructure', ar: 'أنظمة ذكية وبنية تحتية لتقنية المعلومات' },
-    scope: [
-      { ku: 'تۆڕ و Wi-Fi', en: 'Networks and Wi-Fi', ar: 'الشبكات والواي فاي' },
-      { ku: 'کامێرای چاودێری (CCTV)', en: 'CCTV cameras', ar: 'كاميرات المراقبة' },
-      { ku: 'سیستەمی زیرەکی بینا', en: 'Smart building systems', ar: 'أنظمة المباني الذكية' },
-      { ku: 'ژووری سێرڤەر و ئایتی', en: 'Server and IT rooms', ar: 'غرف الخوادم وتقنية المعلومات' },
-    ],
-  },
-  {
-    key: 'pm',
-    name: { ku: 'سەرپەرشتیاریکردنی پرۆژە', en: 'Project management & supervision', ar: 'إدارة المشاريع والإشراف' },
-    desc: { ku: 'بەڕێوەبردن و سەرپەرشتیاری پرۆژە', en: 'Management and on-site supervision', ar: 'إدارة المشاريع والإشراف الميداني' },
-    scope: [
-      { ku: 'سەرپەرشتی مەیدانی', en: 'On-site supervision', ar: 'الإشراف الميداني' },
-      { ku: 'پلان و خشتەی کات', en: 'Planning and scheduling', ar: 'التخطيط والجدولة' },
-      { ku: 'پشکنینی کوالیتی لە هەر قۆناغێک', en: 'Quality checks at every stage', ar: 'فحص الجودة في كل مرحلة' },
-      { ku: 'یەک گرێبەست بۆ هەموو بوارەکان', en: 'One contract for every trade', ar: 'عقد واحد لجميع التخصصات' },
-    ],
-  },
-];
 
 export const clientsSection = {
   title: { ku: 'پرۆژەکانمان لە سەرتاسەری هەرێمی کوردستان', en: 'Projects we have delivered across Kurdistan Region', ar: 'مشاريع أنجزناها في إقليم كردستان' } as L10n,

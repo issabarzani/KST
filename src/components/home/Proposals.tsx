@@ -1,9 +1,13 @@
 import { useState } from 'react';
-import { Check, ShieldCheck } from 'lucide-react';
-import { useLang } from '@/lib/lang-context';
+import { Link } from 'react-router';
+import { ArrowRight, Check, ShieldCheck } from 'lucide-react';
+import { useLang, servicePath } from '@/lib/lang-context';
+import { getService } from '@/lib/services';
 import { proposalsSection as P, hvac, healthcare, type ProposalId } from '@/lib/proposals';
 
-const SERVICE_FOR: Record<ProposalId, string> = { hvac: 'hvac', healthcare: 'medical' };
+const SERVICE_FOR: Record<ProposalId, string> = { hvac: 'hvac', healthcare: 'medical-equipment' };
+// "More" links from each proposal to the full field pages
+const MORE_FOR: Record<ProposalId, string[]> = { hvac: ['hvac'], healthcare: ['medical-equipment', 'operating-rooms'] };
 
 function requestProposal(id: ProposalId, message: string) {
   window.dispatchEvent(new CustomEvent('kst:prefill', { detail: { service: SERVICE_FOR[id], message } }));
@@ -186,6 +190,16 @@ export default function Proposals() {
             {tab === 'healthcare' && <p className="mt-4 leading-loose text-white/75">{healthcare.approach[lang]}</p>}
             <button onClick={() => requestProposal(tab, P.requestMessage[tab][lang])} className="btn btn-gold mt-8">{P.request[lang]}</button>
             <p className="mt-3 text-sm text-white/55">{P.note[lang]}</p>
+            <ul className="mt-6 space-y-2">
+              {MORE_FOR[tab].map((slug) => (
+                <li key={slug}>
+                  <Link to={servicePath(slug, lang)} className="inline-flex items-center gap-2 font-bold text-[hsl(var(--gold))] underline-offset-4 hover:underline">
+                    {P.more[lang]} {getService(slug)!.name[lang]}
+                    <ArrowRight size={16} className="rtl:-scale-x-100" aria-hidden="true" />
+                  </Link>
+                </li>
+              ))}
+            </ul>
             {tab === 'hvac' && (
               <img src="/assets/proposals/hvac-rooftop.webp" alt="" width={900} height={506} loading="lazy" decoding="async" className="mt-8 aspect-[16/10] w-full rounded-sm object-cover opacity-90 ring-1 ring-white/15" />
             )}
