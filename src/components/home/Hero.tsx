@@ -26,6 +26,8 @@ function Strands() {
   );
 }
 
+const BADGE = { ku: 'هەولێر، هەرێمی کوردستان', en: 'Erbil, Kurdistan Region', ar: 'أربيل، إقليم كوردستان' };
+
 export default function Hero() {
   const { lang } = useLang();
   const ref = useRef<HTMLElement>(null);
@@ -54,7 +56,7 @@ export default function Hero() {
         <div>
           <p className="rise mb-6 inline-flex items-center gap-2.5 rounded-full border border-white/20 px-4 py-1.5 text-sm text-white/85" style={{ animationDelay: '0.05s' }}>
             <span className="h-2 w-2 rounded-full bg-[hsl(var(--gold))]" />
-            {home.hero.badge}
+            {BADGE[lang]}
           </p>
 
           <h1
