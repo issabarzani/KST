@@ -66,9 +66,13 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-white/10">
-        <div className="wrap flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/55 sm:flex-row">
+        <div className="wrap flex flex-col items-center justify-between gap-3 pb-28 pt-5 text-xs text-white/55 sm:flex-row sm:pb-24">
           <p>© {new Date().getFullYear()} Kurdistan Service Team. {footer.rights[lang]}</p>
-          <p className="ltr-isolate">kurdistanserviceteam.com</p>
+          <p className="ltr-isolate flex items-center gap-2" dir="ltr" lang="en">
+            <span>Powered by</span>
+            <img src="/assets/bazho-logo.png" alt="" width={35} height={24} className="h-6 w-auto" loading="lazy" />
+            <span className="font-bold text-white/85">Bazho</span>
+          </p>
         </div>
       </div>
     </footer>
